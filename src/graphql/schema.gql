@@ -1,0 +1,32 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AccountLoginInput {
+  email: String!
+  password: String!
+}
+
+type LoginResult {
+  accessToken: String!
+  refreshToken: String!
+  token: String!
+  user: User!
+}
+
+type Mutation {
+  login(input: AccountLoginInput!): LoginResult!
+}
+
+type Query {
+  getProfile: User!
+}
+
+"""User"""
+type User {
+  email: String!
+  firstName: String!
+  id: Float!
+  lastName: String!
+  role: String!
+}

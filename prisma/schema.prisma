@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+    id              String              @id @default(cuid())
+    createdAt       DateTime            @default(now())
+    updatedAt       DateTime            @updatedAt
+    email           String              @unique(map: "Account.email_unique")
+    name            String
+    role            EnumAccountRole     @default(Church)
+    elections       Election[]
+}
+
+model Election {
+    id              String              @id @default(cuid())
+    createdAt       DateTime            @default(now())
+    updatedAt       DateTime            @updatedAt
+    status          EnumElectionStatus
+    accountId       String
+    account         Account             @relation(fields: [accountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    candidates      Candidate[]
+    votes           Vote[]
+}
+
+model Candidate {
+    id              String              @id @default(cuid())
+    name            String
+    imageUrl        String
+    smallGroup      String
+    electionId      String
+    election        Election            @relation(fields: [electionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    createdAt       DateTime            @default(now())
+    updatedAt       DateTime            @updatedAt
+    codes           Code[]
+    votes           Vote[]
+
+    @@index([electionId], map: "Candidate.electionId_index")
+}
+
+model Code {
+    id              String              @id @default(cuid())
+    isUsed          Boolean
+    isDowloaded     Boolean
+    createdAt       DateTime            @default(now())
+    candidateId     String
+    candidate       Candidate            @relation(fields: [candidateId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    votes           Vote[]
+}
+
+model Vote {
+    id              String              @id @default(cuid())
+    codeId          String
+    code            Code                @relation(fields: [codeId], references: [id])
+    candidateId     String
+    candidate       Candidate           @relation(fields: [candidateId], references: [id])
+    electionId      String
+    election        Election            @relation(fields: [electionId], references: [id])
+
+    @@unique([electionId, codeId, candidateId], map: "Vote.electionId_codeId_candidateId_unique")
+}
+
+enum EnumAccountRole {
+    Admin
+    Church
+}
+
+enum EnumElectionStatus {
+    Active
+    Closed
+}
