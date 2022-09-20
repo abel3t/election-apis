@@ -14,7 +14,7 @@ import { Candidate } from '../../models/Candidate';
 import { GetCandidatesQuery } from './hanlders/candidate/get-candidates.command';
 import { CreateCandidateCommand, CreateCandidateInput } from './hanlders/candidate/create-candidate.command';
 
-@Resolver((_) => Account)
+@Resolver((_) => Election)
 export class ElectionResolver {
   constructor(
     private readonly queryBus: QueryBus,

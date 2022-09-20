@@ -65,6 +65,7 @@ model Vote {
     candidate       Candidate           @relation(fields: [candidateId], references: [id])
     electionId      String
     election        Election            @relation(fields: [electionId], references: [id])
+    createdAt       DateTime            @default(now())
 
     @@unique([electionId, codeId, candidateId], map: "Vote.electionId_codeId_candidateId_unique")
 }

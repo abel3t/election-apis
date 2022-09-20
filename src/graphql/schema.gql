@@ -25,6 +25,15 @@ type Candidate {
   updatedAt: DateTime!
 }
 
+input CheckCodeInput {
+  code: String!
+  electionId: String!
+}
+
+type CheckCodeResult {
+  isValid: Boolean!
+}
+
 """Code"""
 type Code {
   createdAt: DateTime!
@@ -49,6 +58,12 @@ input CreateCandidateInput {
 
 input CreateElectionInput {
   name: String!
+}
+
+input CreateVoteInput {
+  candidateIds: [String!]!
+  codeId: String!
+  electionId: String!
 }
 
 """
@@ -88,6 +103,8 @@ type Mutation {
 }
 
 type Query {
+  checkCode(input: CheckCodeInput!): CheckCodeResult!
+  createVotes(input: CreateVoteInput!): [Vote!]!
   getCandidates(electionId: String!): [Candidate!]!
   getCodes(electionId: String!): [Code!]!
   getElections: [Election!]!
@@ -102,4 +119,14 @@ input RefreshTokenInput {
 type SignUpResult {
   email: String!
   role: String!
+}
+
+"""Vote"""
+type Vote {
+  candidateId: String!
+  codeId: String!
+  createdAt: DateTime!
+  electionId: String!
+  id: String!
+  updatedAt: DateTime!
 }
