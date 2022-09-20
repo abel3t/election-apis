@@ -16,9 +16,9 @@ export class VoteResolver {
 
   @UseGuards(AuthGuard)
   @Query((_) => CheckCodeResult)
-  async checkCode(@Args('input') { electionId, code }: CheckCodeInput,
+  async checkCode(@Args('input') { electionId, codeId }: CheckCodeInput,
     @CurrentUser() user: ICurrentUser): Promise<CheckCodeResult> {
-    return this.queryBus.execute(new CheckCodeQuery(electionId, code));
+    return this.queryBus.execute(new CheckCodeQuery(electionId, codeId));
   }
 
   @UseGuards(AuthGuard)

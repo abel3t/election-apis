@@ -5,9 +5,10 @@ import { Field, InputType, ObjectType } from '@nestjs/graphql';
 @InputType()
 export class CheckCodeInput {
   @Field(() => String)
-  electionId?: string;
+  electionId: string;
+
   @Field(() => String)
-  code: string;
+  codeId: string;
 }
 
 @ObjectType()
@@ -17,17 +18,17 @@ export class CheckCodeResult {
 }
 
 export class CheckCodeQuery {
-  constructor(public readonly electionId: string, public readonly code) {}
+  constructor(public readonly electionId: string, public readonly codeId) {}
 }
 
 @QueryHandler(CheckCodeQuery)
 export class CheckCodeHandler implements IQueryHandler<CheckCodeQuery> {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute({ electionId, code }: CheckCodeQuery) {
+  async execute({ electionId, codeId }: CheckCodeQuery) {
     const existedCode = await this.prisma.code.findFirst({
       where: {
-        id: code,
+        id: codeId,
         electionId,
         isActive: true,
         isUsed: false

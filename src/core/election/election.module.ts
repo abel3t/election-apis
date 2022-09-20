@@ -7,9 +7,10 @@ import { GenerateCodesHandler } from './hanlders/code/generate-codes.command';
 import { CreateCandidateHandler } from './hanlders/candidate/create-candidate.command';
 import { GetCandidatesHandler } from './hanlders/candidate/get-candidates.command';
 import { GetCodesHandler } from './hanlders/code/get-codes.query';
+import { UpdateCodeHandler } from './hanlders/code/update-code.command';
 
 const QueryHandlers = [GetElectionsHandler, GetCandidatesHandler, GetCodesHandler];
-const CommandHandlers = [CreateElectionHandler, GenerateCodesHandler, CreateCandidateHandler];
+const CommandHandlers = [CreateElectionHandler, GenerateCodesHandler, CreateCandidateHandler, UpdateCodeHandler];
 
 @Module({
   imports: [CqrsModule],

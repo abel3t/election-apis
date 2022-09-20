@@ -12,6 +12,9 @@ export class Code {
   isUsed: boolean;
 
   @Field()
+  isActive: boolean;
+
+  @Field()
   createdAt: Date;
 
   @Field()

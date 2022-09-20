@@ -13,6 +13,7 @@ import { GetCodesQuery } from './hanlders/code/get-codes.query';
 import { Candidate } from '../../models/Candidate';
 import { GetCandidatesQuery } from './hanlders/candidate/get-candidates.command';
 import { CreateCandidateCommand, CreateCandidateInput } from './hanlders/candidate/create-candidate.command';
+import { UpdateCodeCommand, UpdateCodeInput } from './hanlders/code/update-code.command';
 
 @Resolver((_) => Election)
 export class ElectionResolver {
@@ -40,6 +41,14 @@ export class ElectionResolver {
   generateCodes(@Args('input') generateCodesCodeInput: GenerateCodesCodeInput, @CurrentUser() user: ICurrentUser) {
     return this.commandBus.execute(
       new GenerateCodesCommand({ ...generateCodesCodeInput, userId: user.id })
+    );
+  }
+
+  @UseGuards(AuthGuard)
+  @Mutation((_) => Code)
+  updateCode(@Args('input') updateCode: UpdateCodeInput, @CurrentUser() user: ICurrentUser) {
+    return this.commandBus.execute(
+      new UpdateCodeCommand(updateCode)
     );
   }
 

@@ -26,7 +26,7 @@ type Candidate {
 }
 
 input CheckCodeInput {
-  code: String!
+  codeId: String!
   electionId: String!
 }
 
@@ -39,6 +39,7 @@ type Code {
   createdAt: DateTime!
   downloaded: Float!
   id: String!
+  isActive: Boolean!
   isUsed: Boolean!
   updatedAt: DateTime!
 }
@@ -100,6 +101,7 @@ type Mutation {
   generateCodes(input: GenerateCodesCodeInput!): [Code!]!
   login(input: AccountLoginInput!): LoginResult!
   refreshToken(input: RefreshTokenInput!): LoginResult!
+  updateCode(input: UpdateCodeInput!): Code!
 }
 
 type Query {
@@ -119,6 +121,13 @@ input RefreshTokenInput {
 type SignUpResult {
   email: String!
   role: String!
+}
+
+input UpdateCodeInput {
+  codeId: String!
+  downloaded: Float!
+  electionId: String!
+  isActive: Boolean!
 }
 
 """Vote"""
