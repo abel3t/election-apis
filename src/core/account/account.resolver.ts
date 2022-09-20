@@ -10,7 +10,6 @@ import { GetProfileQuery, SignUpResult } from './handlers/get-profile.query';
 import { CreateAdminAccountCommand, CreateAdminAccountInput } from './handlers/create-account.command';
 import { RefreshTokenInput, RefreshTokenQuery } from './handlers/refresh-token.query';
 
-
 @Resolver((_) => Account)
 export class AccountResolver {
   constructor(
@@ -19,7 +18,7 @@ export class AccountResolver {
   ) {}
 
   @Mutation((_) => SignUpResult)
-    createAccount(@Args('input') adminInput: CreateAdminAccountInput) {
+  createAccount(@Args('input') adminInput: CreateAdminAccountInput) {
     return this.commandBus.execute(
       new CreateAdminAccountCommand(adminInput)
     );

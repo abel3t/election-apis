@@ -10,6 +10,6 @@ export class GetCodesHandler implements IQueryHandler<GetCodesQuery> {
   constructor(private readonly prisma: PrismaService) {}
 
   execute({ electionId }: GetCodesQuery) {
-    return this.prisma.code.findMany({ where: { election: { id: electionId } }});
+    return this.prisma.code.findMany({ where: { election: { id: electionId } } });
   }
 }

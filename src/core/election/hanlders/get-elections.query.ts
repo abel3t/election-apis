@@ -1,7 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { PrismaService } from 'shared/services';
 
-
 export class GetElectionsQuery {
   constructor() {}
 }
