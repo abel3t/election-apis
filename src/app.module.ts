@@ -5,6 +5,7 @@ import { SharedModule } from 'shared/shared.module';
 
 import { JwtStrategy } from './strategies/passport.jwt.strategy';
 import { AccountModule } from './core/account/account.module';
+import { ElectionModule } from './core/election/election.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { AccountModule } from './core/account/account.module';
       sortSchema: true
     }),
     SharedModule,
-    AccountModule
+    AccountModule,
+    ElectionModule
   ],
   controllers: [],
   providers: [JwtStrategy]

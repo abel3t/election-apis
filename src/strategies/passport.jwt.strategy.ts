@@ -7,7 +7,6 @@ import { AppConfig } from 'shared/config';
 interface Payload {
   email: string;
   ['custom:id']: string;
-  ['custom:companyId']: string;
 }
 
 @Injectable()
@@ -39,8 +38,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     return {
       email: payload.email,
       role: payload['custom:role'],
-      id: Number.parseInt(payload['custom:id']),
-      companyId: Number.parseInt(payload['custom:companyId'])
+      id: payload['custom:id']
     };
   }
 }

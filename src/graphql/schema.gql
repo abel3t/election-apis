@@ -15,6 +15,23 @@ input CreateAdminAccountInput {
   secretKey: String!
 }
 
+input CreateElectionInput {
+  name: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""Election"""
+type Election {
+  createdAt: DateTime!
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+}
+
 type LoginResult {
   accessToken: String!
   refreshToken: String!
@@ -24,11 +41,13 @@ type LoginResult {
 
 type Mutation {
   createAccount(input: CreateAdminAccountInput!): SignUpResult!
+  createElection(input: CreateElectionInput!): Election!
   login(input: AccountLoginInput!): LoginResult!
   refreshToken(input: RefreshTokenInput!): LoginResult!
 }
 
 type Query {
+  getElections: [Election!]!
   getProfile: User!
 }
 
