@@ -2,6 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Account"""
+type Account {
+  email: String!
+  firstName: String!
+  id: Float!
+  lastName: String!
+  role: String!
+}
+
 input AccountLoginInput {
   email: String!
   password: String!
@@ -26,9 +35,11 @@ scalar DateTime
 
 """Election"""
 type Election {
+  accountId: String!
   createdAt: DateTime!
   id: String!
   name: String!
+  status: String!
   updatedAt: DateTime!
 }
 
@@ -36,7 +47,7 @@ type LoginResult {
   accessToken: String!
   refreshToken: String!
   token: String!
-  user: User!
+  user: Account!
 }
 
 type Mutation {
@@ -48,7 +59,7 @@ type Mutation {
 
 type Query {
   getElections: [Election!]!
-  getProfile: User!
+  getProfile: Account!
 }
 
 input RefreshTokenInput {
@@ -58,14 +69,5 @@ input RefreshTokenInput {
 
 type SignUpResult {
   email: String!
-  role: String!
-}
-
-"""User"""
-type User {
-  email: String!
-  firstName: String!
-  id: Float!
-  lastName: String!
   role: String!
 }

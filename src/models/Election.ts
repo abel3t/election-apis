@@ -9,6 +9,12 @@ export class Election {
   name: string;
 
   @Field()
+  status: string;
+
+  @Field()
+  accountId: string;
+
+  @Field()
   createdAt: Date;
 
   @Field()

@@ -3,7 +3,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CurrentUser, ICurrentUser } from 'decorators/user.decorator';
 import { AuthGuard } from 'guards/auth.guard';
-import { User } from 'models/User';
+import { Account } from 'models/Account';
 import { LoginResult } from './dto/login-result.dto';
 import { AccountLoginInput, AccountLoginQuery } from './handlers/account-login.query';
 import { GetProfileQuery, SignUpResult } from './handlers/get-profile.query';
@@ -11,7 +11,7 @@ import { CreateAdminAccountCommand, CreateAdminAccountInput } from './handlers/c
 import { RefreshTokenInput, RefreshTokenQuery } from './handlers/refresh-token.query';
 
 
-@Resolver((_) => User)
+@Resolver((_) => Account)
 export class AccountResolver {
   constructor(
     private readonly queryBus: QueryBus,
@@ -40,8 +40,8 @@ export class AccountResolver {
   }
 
   @UseGuards(AuthGuard)
-  @Query((_) => User)
-  async getProfile(@CurrentUser() user: ICurrentUser): Promise<User> {
+  @Query((_) => Account)
+  async getProfile(@CurrentUser() user: ICurrentUser): Promise<Account> {
     return this.queryBus.execute(new GetProfileQuery(user.email));
   }
 }
