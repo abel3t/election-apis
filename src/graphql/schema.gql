@@ -7,6 +7,14 @@ input AccountLoginInput {
   password: String!
 }
 
+input CreateAdminAccountInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  secretKey: String!
+}
+
 type LoginResult {
   accessToken: String!
   refreshToken: String!
@@ -15,11 +23,23 @@ type LoginResult {
 }
 
 type Mutation {
+  createAccount(input: CreateAdminAccountInput!): SignUpResult!
   login(input: AccountLoginInput!): LoginResult!
+  refreshToken(input: RefreshTokenInput!): LoginResult!
 }
 
 type Query {
   getProfile: User!
+}
+
+input RefreshTokenInput {
+  email: String!
+  refreshToken: String!
+}
+
+type SignUpResult {
+  email: String!
+  role: String!
 }
 
 """User"""

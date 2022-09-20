@@ -28,8 +28,6 @@ export class CognitoService {
   constructor() {
     this.userPoolId = AppConfig.AWS.COGNITO.USER_POOL_ID;
 
-    console.log(AppConfig)
-
     this.userPool = new CognitoUserPool({
       UserPoolId: AppConfig.AWS.COGNITO.USER_POOL_ID,
       ClientId: AppConfig.AWS.COGNITO.APP_CLIENT_ID

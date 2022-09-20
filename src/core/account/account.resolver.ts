@@ -6,7 +6,9 @@ import { AuthGuard } from 'guards/auth.guard';
 import { User } from 'models/User';
 import { LoginResult } from './dto/login-result.dto';
 import { AccountLoginInput, AccountLoginQuery } from './handlers/account-login.query';
-import { GetProfileQuery } from './handlers/get-profile.query';
+import { GetProfileQuery, SignUpResult } from './handlers/get-profile.query';
+import { CreateAdminAccountCommand, CreateAdminAccountInput } from './handlers/create-account.command';
+import { RefreshTokenInput, RefreshTokenQuery } from './handlers/refresh-token.query';
 
 
 @Resolver((_) => User)
@@ -16,10 +18,24 @@ export class AccountResolver {
     private readonly commandBus: CommandBus
   ) {}
 
+  @Mutation((_) => SignUpResult)
+    createAccount(@Args('input') adminInput: CreateAdminAccountInput) {
+    return this.commandBus.execute(
+      new CreateAdminAccountCommand(adminInput)
+    );
+  }
+
   @Mutation((_) => LoginResult)
   login(@Args('input') loginUserInput: AccountLoginInput) {
     return this.queryBus.execute(
       new AccountLoginQuery(loginUserInput.email, loginUserInput.password)
+    );
+  }
+
+  @Mutation((_) => LoginResult)
+  refreshToken(@Args('input') refreshTokenInput: RefreshTokenInput) {
+    return this.queryBus.execute(
+      new RefreshTokenQuery(refreshTokenInput.email, refreshTokenInput.refreshToken)
     );
   }
 

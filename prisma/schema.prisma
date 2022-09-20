@@ -12,7 +12,9 @@ model Account {
     createdAt       DateTime            @default(now())
     updatedAt       DateTime            @updatedAt
     email           String              @unique(map: "Account.email_unique")
-    name            String
+    firstName       String
+    lastName        String
+    status          EnumAccountStatus   @default(Active)
     role            EnumAccountRole     @default(Church)
     elections       Election[]
 }
@@ -49,7 +51,7 @@ model Code {
     isDowloaded     Boolean
     createdAt       DateTime            @default(now())
     candidateId     String
-    candidate       Candidate            @relation(fields: [candidateId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    candidate       Candidate           @relation(fields: [candidateId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     votes           Vote[]
 }
 
@@ -63,6 +65,12 @@ model Vote {
     election        Election            @relation(fields: [electionId], references: [id])
 
     @@unique([electionId, codeId, candidateId], map: "Vote.electionId_codeId_candidateId_unique")
+}
+
+enum EnumAccountStatus {
+    Active
+    Pending
+    Deleted
 }
 
 enum EnumAccountRole {

@@ -20,13 +20,13 @@ export class AccountLoginQuery {
 }
 
 @QueryHandler(AccountLoginQuery)
-export class UserLoginHandler implements IQueryHandler<AccountLoginQuery> {
+export class AccountLoginHandler implements IQueryHandler<AccountLoginQuery> {
   constructor(
     private readonly prisma: PrismaService,
     private readonly cognitoService: CognitoService
   ) {}
 
-  async execute({ email, password }: AccountLoginQuery) {
+  async execute({ email, password }) {
     const existedUser = await this.prisma.account.findUnique({ where: { email } });
     if (!existedUser) {
       throw new BadRequestException('User not found!');

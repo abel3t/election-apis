@@ -6,6 +6,9 @@ interface IConfig {
   DB: {
     DATABASE_URL: string;
   };
+  APP: {
+    CREATE_ACCOUNT_SECRET_KEY: string
+  },
   AWS: {
     ACCESS_KEY_ID: string;
     SECRET_ACCESS_KEY: string;
@@ -24,6 +27,9 @@ export const AppConfig: IConfig = {
     DATABASE_URL:
       process.env.DATABASE_URL ||
       'postgres://postgres:postgres@localhost:5432/postgres'
+  },
+  APP: {
+    CREATE_ACCOUNT_SECRET_KEY: process.env.CREATE_ACCOUNT_SECRET_KEY
   },
   AWS: {
     ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || '',
