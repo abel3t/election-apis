@@ -16,12 +16,35 @@ input AccountLoginInput {
   password: String!
 }
 
+"""Candidate"""
+type Candidate {
+  createdAt: DateTime!
+  electionId: String!
+  id: String!
+  name: String!
+  updatedAt: DateTime!
+}
+
+"""Code"""
+type Code {
+  createdAt: DateTime!
+  downloaded: Float!
+  id: String!
+  isUsed: Boolean!
+  updatedAt: DateTime!
+}
+
 input CreateAdminAccountInput {
   email: String!
   firstName: String!
   lastName: String!
   password: String!
   secretKey: String!
+}
+
+input CreateCandidateInput {
+  electionId: String!
+  name: String!
 }
 
 input CreateElectionInput {
@@ -43,6 +66,11 @@ type Election {
   updatedAt: DateTime!
 }
 
+input GenerateCodesCodeInput {
+  amount: Float!
+  electionId: String!
+}
+
 type LoginResult {
   accessToken: String!
   refreshToken: String!
@@ -52,12 +80,16 @@ type LoginResult {
 
 type Mutation {
   createAccount(input: CreateAdminAccountInput!): SignUpResult!
+  createCandidate(input: CreateCandidateInput!): Candidate!
   createElection(input: CreateElectionInput!): Election!
+  generateCodes(input: GenerateCodesCodeInput!): [Code!]!
   login(input: AccountLoginInput!): LoginResult!
   refreshToken(input: RefreshTokenInput!): LoginResult!
 }
 
 type Query {
+  getCandidates(electionId: String!): [Candidate!]!
+  getCodes(electionId: String!): [Code!]!
   getElections: [Election!]!
   getProfile: Account!
 }

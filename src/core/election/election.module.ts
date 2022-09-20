@@ -2,10 +2,14 @@ import { Module } from '@nestjs/common';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CreateElectionHandler } from './hanlders/create-election.command';
 import { ElectionResolver } from './election.resolver';
-import { GetElectionHandler } from './hanlders/get-elections.query';
+import { GetElectionsHandler } from './hanlders/get-elections.query';
+import { GenerateCodesHandler } from './hanlders/code/generate-codes.command';
+import { CreateCandidateHandler } from './hanlders/candidate/create-candidate.command';
+import { GetCandidatesHandler } from './hanlders/candidate/get-candidates.command';
+import { GetCodesHandler } from './hanlders/code/get-codes.query';
 
-const QueryHandlers = [GetElectionHandler];
-const CommandHandlers = [CreateElectionHandler];
+const QueryHandlers = [GetElectionsHandler, GetCandidatesHandler, GetCodesHandler];
+const CommandHandlers = [CreateElectionHandler, GenerateCodesHandler, CreateCandidateHandler];
 
 @Module({
   imports: [CqrsModule],

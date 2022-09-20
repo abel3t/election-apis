@@ -2,15 +2,15 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { PrismaService } from 'shared/services';
 
 
-export class GetElectionQuery {
+export class GetElectionsQuery {
   constructor() {}
 }
 
-@QueryHandler(GetElectionQuery)
-export class GetElectionHandler implements IQueryHandler<GetElectionQuery> {
+@QueryHandler(GetElectionsQuery)
+export class GetElectionsHandler implements IQueryHandler<GetElectionsQuery> {
   constructor(private readonly prisma: PrismaService) {}
 
-  execute(query: GetElectionQuery) {
+  execute(query: GetElectionsQuery) {
     return this.prisma.election.findMany();
   }
 }
