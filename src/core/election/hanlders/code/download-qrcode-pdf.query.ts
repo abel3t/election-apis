@@ -1,0 +1,26 @@
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { PrismaService } from 'shared/services';
+import { BadRequestException } from '@nestjs/common';
+import { generatePdf } from 'shared/utils/pdfkit.util';
+
+export class DownloadQrCodePdfQuery {
+  constructor(public readonly electionId: string) {}
+}
+
+@QueryHandler(DownloadQrCodePdfQuery)
+export class DownloadQrCodePdfHandler implements IQueryHandler<DownloadQrCodePdfQuery> {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async execute({ electionId }: DownloadQrCodePdfQuery) {
+    const codes = await this.prisma.code.findMany({ where: { election: { id: electionId } } });
+
+    if (!codes.length) {
+      throw new BadRequestException('You haven\'t any codes!');
+    }
+
+    this.prisma.code.updateMany(
+      { where: { election: { id: electionId } }, data: { downloaded: codes[0].downloaded + 1 } });
+
+    return generatePdf(codes.map(code => `http//localhost:8080/voting/?election=${electionId}&code=${code.id}`));
+  }
+}
