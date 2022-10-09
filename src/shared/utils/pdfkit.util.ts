@@ -1,19 +1,35 @@
 import * as PDFDocument from 'pdfkit';
 import { generateQrCode } from './qrcode.util';
 
-function addImagesToDoc(doc, images) {
-  const itemPerPage = 20;
-  const sizes = [135, 135];
+function drawCutLine(doc) {
+  doc.moveTo(297, 0)
+    .lineTo(297, 840)
+    .dash(3, { space: 0 })
+    .stroke();
+
+  doc.moveTo(0, 287)
+    .lineTo(840, 287)
+    .dash(3, { space: 0 })
+    .stroke();
+
+  doc.moveTo(0, 547)
+    .lineTo(840, 547)
+    .dash(3, { space: 0 })
+    .stroke();
+}
+
+function addImagesToDoc(doc, images)  {
+  const itemPerPage = 6;
+  const sizes = [160, 160];
   const positions = [
-    [11, 29], [157, 29], [303, 29], [449, 29],
-    [11, 191], [157, 191], [303, 191], [449, 191],
-    [11, 353], [157, 353], [303, 353], [449, 353],
-    [11, 515], [157, 515], [303, 515], [449, 515],
-    [11, 677], [157, 677], [303, 677], [449, 677]
+    [69, 60], [367, 60],
+    [69, 340], [367, 340],
+    [69, 620], [367, 620]
   ];
 
   for (let i = 0; i < images.length; i++) {
     if (i > 0 && i % itemPerPage === 0) {
+      drawCutLine(doc);
       doc.addPage();
     }
 
@@ -26,6 +42,8 @@ function addImagesToDoc(doc, images) {
       .rect(...positions[i % itemPerPage], ...sizes)
       .stroke();
   }
+
+  drawCutLine(doc);
 }
 
 export function generatePdf(links: string[]): Promise<Buffer> {
