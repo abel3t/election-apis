@@ -95,13 +95,16 @@ type LoginResult {
 }
 
 type Mutation {
+  cloneElection(electionId: String!): Boolean!
   createAccount(input: CreateAdminAccountInput!): SignUpResult!
   createCandidate(input: CreateCandidateInput!): Candidate!
   createElection(input: CreateElectionInput!): Election!
+  deleteCandidate(candidateId: String!, electionId: String!): Boolean!
   generateCodes(input: GenerateCodesCodeInput!): [Code!]!
   login(input: AccountLoginInput!): LoginResult!
   refreshToken(input: RefreshTokenInput!): LoginResult!
   updateCode(input: UpdateCodeInput!): Code!
+  updateElection(electionId: String!, name: String!): Boolean!
 }
 
 type Query {

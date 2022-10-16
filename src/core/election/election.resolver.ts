@@ -14,6 +14,9 @@ import { Candidate } from '../../models/Candidate';
 import { GetCandidatesQuery } from './hanlders/candidate/get-candidates.command';
 import { CreateCandidateCommand, CreateCandidateInput } from './hanlders/candidate/create-candidate.command';
 import { UpdateCodeCommand, UpdateCodeInput } from './hanlders/code/update-code.command';
+import { CloneElectionCommand } from './hanlders/clone-election.command';
+import { DeleteCandidateCommand } from './hanlders/candidate/delete-candidate.command';
+import { UpdateElectionCommand } from './hanlders/update-election.comnmand';
 
 @Resolver((_) => Election)
 export class ElectionResolver {
@@ -64,6 +67,32 @@ export class ElectionResolver {
     return this.commandBus.execute(
       new CreateCandidateCommand({ ...candidateInput, userId: user.id })
     );
+  }
+
+  @UseGuards(AuthGuard)
+  @Mutation((_) => Boolean)
+  async cloneElection(@Args('electionId') electionId: string, @CurrentUser() user: ICurrentUser): Promise<Candidate> {
+    return this.commandBus.execute(new CloneElectionCommand(electionId));
+  }
+
+  @UseGuards(AuthGuard)
+  @Mutation((_) => Boolean)
+  async deleteCandidate(
+    @Args('electionId') electionId: string,
+    @Args('candidateId') candidateId: string,
+    @CurrentUser() user: ICurrentUser
+  ): Promise<Candidate[]> {
+    return this.commandBus.execute(new DeleteCandidateCommand(electionId, candidateId));
+  }
+
+  @UseGuards(AuthGuard)
+  @Mutation((_) => Boolean)
+  async updateElection(
+    @Args('electionId') electionId: string,
+    @Args('name') name: string,
+    @CurrentUser() user: ICurrentUser
+  ): Promise<Candidate[]> {
+    return this.commandBus.execute(new UpdateElectionCommand(electionId, name));
   }
 
   @UseGuards(AuthGuard)

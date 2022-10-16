@@ -10,9 +10,15 @@ import { GetCodesHandler } from './hanlders/code/get-codes.query';
 import { UpdateCodeHandler } from './hanlders/code/update-code.command';
 import { ElectionController } from './election.controller';
 import { DownloadQrCodePdfHandler } from './hanlders/code/download-qrcode-pdf.query';
+import { CloneElectionsHandler } from './hanlders/clone-election.command';
+import { DeleteCandidateHandler } from './hanlders/candidate/delete-candidate.command';
+import { UpdateElectionHandler } from './hanlders/update-election.comnmand';
 
 const QueryHandlers = [GetElectionsHandler, GetCandidatesHandler, GetCodesHandler, DownloadQrCodePdfHandler];
-const CommandHandlers = [CreateElectionHandler, GenerateCodesHandler, CreateCandidateHandler, UpdateCodeHandler];
+const CommandHandlers = [
+  CreateElectionHandler, GenerateCodesHandler, CreateCandidateHandler, UpdateCodeHandler,
+  CloneElectionsHandler, DeleteCandidateHandler, UpdateElectionHandler
+];
 
 @Module({
   imports: [CqrsModule],
