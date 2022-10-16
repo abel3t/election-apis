@@ -9,9 +9,12 @@ import { AppConfig } from './shared/config';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 async function bootstrap() {
+  const fAdapt = new FastifyAdapter()
+  fAdapt.register(require('fastify-multipart'))
+
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
+    fAdapt
   );
 
   const prismaService = app.get(PrismaService);

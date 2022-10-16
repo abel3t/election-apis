@@ -17,6 +17,9 @@ interface IConfig {
       REGION: string;
       USER_POOL_ID: string;
       APP_CLIENT_ID: string;
+    },
+    S3: {
+      BUCKET: string
     };
   };
 }
@@ -39,6 +42,9 @@ export const AppConfig: IConfig = {
       REGION: process.env.AWS_COGNITO_REGION,
       USER_POOL_ID: process.env.AWS_COGNITO_USER_POOL_ID,
       APP_CLIENT_ID: process.env.AWS_COGNITO_APP_CLIENT_ID
+    },
+    S3: {
+      BUCKET: process.env.AWS_S3_BUCKET
     }
   }
 };

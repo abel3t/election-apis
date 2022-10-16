@@ -21,6 +21,7 @@ type Candidate {
   createdAt: DateTime!
   electionId: String!
   id: String!
+  imageUrl: String
   name: String!
   updatedAt: DateTime!
 }
@@ -54,6 +55,7 @@ input CreateAdminAccountInput {
 
 input CreateCandidateInput {
   electionId: String!
+  imageUrl: String!
   name: String!
 }
 

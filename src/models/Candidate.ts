@@ -8,6 +8,9 @@ export class Candidate {
   @Field()
   name: string;
 
+  @Field({ nullable: true })
+  imageUrl: string;
+
   @Field()
   electionId: string;
 

@@ -4,14 +4,21 @@ import { BadRequestException } from '@nestjs/common';
 import { generatePdf } from 'shared/utils/pdfkit.util';
 
 export class DownloadQrCodePdfQuery {
-  constructor(public readonly electionId: string) {}
+  constructor(public readonly userId: string, public readonly electionId: string) {}
 }
 
 @QueryHandler(DownloadQrCodePdfQuery)
 export class DownloadQrCodePdfHandler implements IQueryHandler<DownloadQrCodePdfQuery> {
   constructor(private readonly prisma: PrismaService) {}
 
-  async execute({ electionId }: DownloadQrCodePdfQuery) {
+  async execute({ userId, electionId }: DownloadQrCodePdfQuery) {
+    const existedElection = this.prisma.election.findFirst({ where: { id: electionId, accountId: userId } }).then(data => data);
+
+    if (!existedElection) {
+      throw new BadRequestException('Election is invalid!');
+    }
+
+
     const codes = await this.prisma.code.findMany({ where: { election: { id: electionId } } });
 
     if (!codes.length) {

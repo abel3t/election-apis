@@ -13,6 +13,7 @@ import { DownloadQrCodePdfHandler } from './hanlders/code/download-qrcode-pdf.qu
 import { CloneElectionsHandler } from './hanlders/clone-election.command';
 import { DeleteCandidateHandler } from './hanlders/candidate/delete-candidate.command';
 import { UpdateElectionHandler } from './hanlders/update-election.comnmand';
+import { S3Service } from 'shared/services/s3.service';
 
 const QueryHandlers = [GetElectionsHandler, GetCandidatesHandler, GetCodesHandler, DownloadQrCodePdfHandler];
 const CommandHandlers = [
@@ -23,6 +24,6 @@ const CommandHandlers = [
 @Module({
   imports: [CqrsModule],
   controllers: [ElectionController],
-  providers: [ElectionResolver, ...QueryHandlers, ...CommandHandlers]
+  providers: [ElectionResolver, S3Service, ...QueryHandlers, ...CommandHandlers]
 })
 export class ElectionModule {}

@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Account } from 'models/Account';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateElectionCommand, CreateElectionInput } from './hanlders/create-election.command';
 import { CurrentUser, ICurrentUser } from 'decorators/user.decorator';
