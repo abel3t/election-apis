@@ -1,4 +1,4 @@
-import { Args, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '../../guards/auth.guard';
@@ -23,8 +23,7 @@ export class VoteResolver {
     return this.queryBus.execute(new CheckCodeQuery(electionId, codeId));
   }
 
-  @UseGuards(AuthGuard)
-  @Query((_) => [Vote])
+  @Mutation((_) => Boolean)
   async createVotes(@Args('input') createVoteInput: CreateVoteInput) {
     return this.commandBus.execute(new CreateVoteCommand(createVoteInput));
   }

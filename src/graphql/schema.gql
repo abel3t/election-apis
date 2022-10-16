@@ -101,6 +101,7 @@ type Mutation {
   createAccount(input: CreateAdminAccountInput!): SignUpResult!
   createCandidate(input: CreateCandidateInput!): Candidate!
   createElection(input: CreateElectionInput!): Election!
+  createVotes(input: CreateVoteInput!): Boolean!
   deleteCandidate(candidateId: String!, electionId: String!): Boolean!
   generateCodes(input: GenerateCodesCodeInput!): [Code!]!
   login(input: AccountLoginInput!): LoginResult!
@@ -111,7 +112,6 @@ type Mutation {
 
 type Query {
   checkCode(input: CheckCodeInput!): CheckCodeResult!
-  createVotes(input: CreateVoteInput!): [Vote!]!
   getCandidates(codeId: String!, electionId: String!): [Candidate!]!
   getCodes(electionId: String!): [Code!]!
   getElections: [Election!]!
@@ -133,14 +133,4 @@ input UpdateCodeInput {
   downloaded: Float!
   electionId: String!
   isActive: Boolean!
-}
-
-"""Vote"""
-type Vote {
-  candidateId: String!
-  codeId: String!
-  createdAt: DateTime!
-  electionId: String!
-  id: String!
-  updatedAt: DateTime!
 }

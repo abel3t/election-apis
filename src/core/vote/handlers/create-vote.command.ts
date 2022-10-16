@@ -53,6 +53,6 @@ export class CreateVoteHandler
 
     await this.prisma.vote.createMany({ data: votes });
 
-    return this.prisma.vote.findMany({ where: { electionId, codeId } });
+    return true;
   }
 }
