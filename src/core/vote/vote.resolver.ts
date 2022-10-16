@@ -5,7 +5,9 @@ import { AuthGuard } from '../../guards/auth.guard';
 import { CurrentUser, ICurrentUser } from 'decorators/user.decorator';
 import { CheckCodeInput, CheckCodeQuery, CheckCodeResult } from './handlers/check-code.query';
 import { CreateVoteCommand, CreateVoteInput } from './handlers/create-vote.command';
-import { Vote } from '../../models/Vote';
+import { GetVotingCandidatesQuery } from './handlers/get-candidates.query';
+import { Vote } from 'models/Vote';
+import { Candidate } from 'models/Candidate';
 
 @Resolver((_) => Vote)
 export class VoteResolver {
@@ -25,5 +27,10 @@ export class VoteResolver {
   @Query((_) => [Vote])
   async createVotes(@Args('input') createVoteInput: CreateVoteInput) {
     return this.commandBus.execute(new CreateVoteCommand(createVoteInput));
+  }
+
+  @Query((_) => [Candidate])
+  async getCandidates(@Args('electionId') electionId: string, @Args('codeId') codeId: string) {
+    return this.queryBus.execute(new GetVotingCandidatesQuery(electionId, codeId));
   }
 }

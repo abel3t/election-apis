@@ -7,9 +7,7 @@ import {
   Post,
   Req,
   Res,
-  UploadedFile,
-  UseGuards,
-  UseInterceptors
+  UseGuards
 } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
 import { DownloadQrCodePdfQuery } from './hanlders/code/download-qrcode-pdf.query';

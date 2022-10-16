@@ -112,7 +112,7 @@ type Mutation {
 type Query {
   checkCode(input: CheckCodeInput!): CheckCodeResult!
   createVotes(input: CreateVoteInput!): [Vote!]!
-  getCandidates(electionId: String!): [Candidate!]!
+  getCandidates(codeId: String!, electionId: String!): [Candidate!]!
   getCodes(electionId: String!): [Code!]!
   getElections: [Election!]!
   getProfile: Account!
