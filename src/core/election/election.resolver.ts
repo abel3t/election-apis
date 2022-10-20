@@ -16,6 +16,7 @@ import { UpdateCodeCommand, UpdateCodeInput } from './hanlders/code/update-code.
 import { CloneElectionCommand } from './hanlders/clone-election.command';
 import { DeleteCandidateCommand } from './hanlders/candidate/delete-candidate.command';
 import { UpdateElectionCommand } from './hanlders/update-election.comnmand';
+import { GetElectionResultQuery, GetElectionResultResult } from './hanlders/get-election-result.query';
 
 @Resolver((_) => Election)
 export class ElectionResolver {
@@ -98,5 +99,11 @@ export class ElectionResolver {
   @Query((_) => [Candidate])
   async getCandidates(@Args('electionId') electionId: string, @CurrentUser() user: ICurrentUser): Promise<Candidate[]> {
     return this.queryBus.execute(new GetCandidatesQuery(electionId));
+  }
+
+  @UseGuards(AuthGuard)
+  @Query((_) => [GetElectionResultResult])
+  async getElectionResult(@Args('electionId') electionId: string, @CurrentUser() user: ICurrentUser): Promise<Code[]> {
+    return this.queryBus.execute(new GetElectionResultQuery(electionId, user.id));
   }
 }

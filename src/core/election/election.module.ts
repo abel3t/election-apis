@@ -14,8 +14,12 @@ import { CloneElectionsHandler } from './hanlders/clone-election.command';
 import { DeleteCandidateHandler } from './hanlders/candidate/delete-candidate.command';
 import { UpdateElectionHandler } from './hanlders/update-election.comnmand';
 import { S3Service } from 'shared/services/s3.service';
+import { GetElectionResultHandler } from './hanlders/get-election-result.query';
 
-const QueryHandlers = [GetElectionsHandler, GetCandidatesHandler, GetCodesHandler, DownloadQrCodePdfHandler];
+const QueryHandlers = [
+  GetElectionsHandler, GetCandidatesHandler, GetCodesHandler, DownloadQrCodePdfHandler,
+  GetElectionResultHandler
+];
 const CommandHandlers = [
   CreateElectionHandler, GenerateCodesHandler, CreateCandidateHandler, UpdateCodeHandler,
   CloneElectionsHandler, DeleteCandidateHandler, UpdateElectionHandler

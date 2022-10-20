@@ -7,7 +7,8 @@ interface IConfig {
     DATABASE_URL: string;
   };
   APP: {
-    CREATE_ACCOUNT_SECRET_KEY: string
+    CREATE_ACCOUNT_SECRET_KEY: string,
+    WEBSITE_URL: string
   },
   AWS: {
     ACCESS_KEY_ID: string;
@@ -32,7 +33,8 @@ export const AppConfig: IConfig = {
       'postgres://postgres:postgres@localhost:5432/postgres'
   },
   APP: {
-    CREATE_ACCOUNT_SECRET_KEY: process.env.CREATE_ACCOUNT_SECRET_KEY
+    CREATE_ACCOUNT_SECRET_KEY: process.env.CREATE_ACCOUNT_SECRET_KEY,
+    WEBSITE_URL: process.env.WEBSITE_URL
   },
   AWS: {
     ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID || '',

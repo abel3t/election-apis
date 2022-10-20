@@ -9,7 +9,23 @@ import { AppConfig } from './shared/config';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 async function bootstrap() {
+  const CORS_OPTIONS = {
+    origin: ['http://localhost:3000'], // or '*' or whatever is required
+    allowedHeaders: [
+      'Access-Control-Allow-Origin',
+      'Origin',
+      'X-Requested-With',
+      'Accept',
+      'Content-Type',
+      'Authorization',
+    ],
+    exposedHeaders: 'Authorization',
+    credentials: true,
+    methods: ['GET', 'PUT', 'OPTIONS', 'POST', 'DELETE'],
+  };
+
   const fAdapt = new FastifyAdapter()
+  fAdapt.enableCors(CORS_OPTIONS)
   fAdapt.register(require('fastify-multipart'))
 
   const app = await NestFactory.create<NestFastifyApplication>(

@@ -4,8 +4,9 @@ import { VoteResolver } from './vote.resolver';
 import { CheckCodeHandler } from './handlers/check-code.query';
 import { CreateVoteHandler } from './handlers/create-vote.command';
 import { GetVotingCandidatesHandler } from './handlers/get-candidates.query';
+import { GetMaxSelectedCandidateHandler } from "./handlers/get-max-selected-candidate.query";
 
-const QueryHandlers = [CheckCodeHandler, GetVotingCandidatesHandler];
+const QueryHandlers = [CheckCodeHandler, GetVotingCandidatesHandler, GetMaxSelectedCandidateHandler];
 const CommandHandlers = [CreateVoteHandler];
 
 @Module({

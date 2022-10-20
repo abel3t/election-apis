@@ -14,7 +14,8 @@ import { VoteModule } from './core/vote/vote.module';
       driver: ApolloDriver,
       playground: true,
       autoSchemaFile: 'src/graphql/schema.gql',
-      sortSchema: true
+      sortSchema: true,
+      cors: false
     }),
     SharedModule,
     AccountModule,

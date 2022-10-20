@@ -26,6 +26,7 @@ model Election {
     updatedAt       DateTime            @updatedAt
     status          EnumElectionStatus  @default(Active)
     accountId       String
+    maxSelected     Int                 @default(5)
     account         Account             @relation(fields: [accountId], references: [id], onDelete: Cascade, onUpdate: Cascade)
     candidates      Candidate[]
     codes           Code[]

@@ -51,7 +51,10 @@ export class CreateVoteHandler
       return { electionId, codeId, candidateId };
     });
 
-    await this.prisma.vote.createMany({ data: votes });
+    await Promise.all([
+      this.prisma.vote.createMany({ data: votes }),
+      this.prisma.code.update({ data: { isUsed: true }, where: { id: codeId } })
+    ]);
 
     return true;
   }

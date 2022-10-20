@@ -89,6 +89,22 @@ input GenerateCodesCodeInput {
   electionId: String!
 }
 
+type GetElectionResultResult {
+  codeIds: [String!]!
+  createdAt: DateTime!
+  electionId: String!
+  id: String!
+  imageUrl: String
+  name: String!
+  totalCodes: Int!
+  updatedAt: DateTime!
+  votes: Int!
+}
+
+type GetMaxSelectedCandidateResult {
+  maxSelected: Int!
+}
+
 type LoginResult {
   accessToken: String!
   refreshToken: String!
@@ -112,10 +128,13 @@ type Mutation {
 
 type Query {
   checkCode(input: CheckCodeInput!): CheckCodeResult!
-  getCandidates(codeId: String!, electionId: String!): [Candidate!]!
+  getCandidates(electionId: String!): [Candidate!]!
   getCodes(electionId: String!): [Code!]!
+  getElectionResult(electionId: String!): [GetElectionResultResult!]!
   getElections: [Election!]!
+  getMaxSelectedCandidate(codeId: String!, electionId: String!): GetMaxSelectedCandidateResult!
   getProfile: Account!
+  getVotingCandidates(codeId: String!, electionId: String!): [Candidate!]!
 }
 
 input RefreshTokenInput {
