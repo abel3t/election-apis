@@ -12,6 +12,9 @@ export class Election {
   status: string;
 
   @Field()
+  maxSelected: number;
+
+  @Field()
   accountId: string;
 
   @Field()

@@ -3,7 +3,7 @@ import { PrismaService } from 'shared/services';
 import { BadRequestException } from '@nestjs/common';
 
 export class UpdateElectionCommand {
-  constructor(public electionId: string, public name: string) {}
+  constructor(public electionId: string, public name: string, public maxSelected: number) {}
 }
 
 @CommandHandler(UpdateElectionCommand)
@@ -12,9 +12,7 @@ export class UpdateElectionHandler implements ICommandHandler<UpdateElectionComm
     private readonly prisma: PrismaService
   ) {}
 
-  async execute({ electionId, name }: UpdateElectionCommand) {
-    console.log({ electionId, name  })
-
+  async execute({ electionId, name, maxSelected }: UpdateElectionCommand) {
     const existedElection = await this.prisma.election.findFirst({ where: { id: electionId } });
 
     if (!existedElection) {
@@ -23,7 +21,7 @@ export class UpdateElectionHandler implements ICommandHandler<UpdateElectionComm
 
     await this.prisma.election.update({
       where: { id: electionId },
-      data: { name }
+      data: { name, maxSelected }
     });
 
     return true;

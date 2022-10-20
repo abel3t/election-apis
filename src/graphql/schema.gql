@@ -60,6 +60,7 @@ input CreateCandidateInput {
 }
 
 input CreateElectionInput {
+  maxSelected: Int!
   name: String!
 }
 
@@ -79,6 +80,7 @@ type Election {
   accountId: String!
   createdAt: DateTime!
   id: String!
+  maxSelected: Float!
   name: String!
   status: String!
   updatedAt: DateTime!
@@ -123,7 +125,7 @@ type Mutation {
   login(input: AccountLoginInput!): LoginResult!
   refreshToken(input: RefreshTokenInput!): LoginResult!
   updateCode(input: UpdateCodeInput!): Code!
-  updateElection(electionId: String!, name: String!): Boolean!
+  updateElection(electionId: String!, maxSelected: Float!, name: String!): Boolean!
 }
 
 type Query {

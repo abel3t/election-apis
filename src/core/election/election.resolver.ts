@@ -90,9 +90,10 @@ export class ElectionResolver {
   async updateElection(
     @Args('electionId') electionId: string,
     @Args('name') name: string,
+    @Args('maxSelected') maxSelected: number,
     @CurrentUser() user: ICurrentUser
   ): Promise<Candidate[]> {
-    return this.commandBus.execute(new UpdateElectionCommand(electionId, name));
+    return this.commandBus.execute(new UpdateElectionCommand(electionId, name, maxSelected));
   }
 
   @UseGuards(AuthGuard)

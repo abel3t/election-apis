@@ -29,6 +29,7 @@ CREATE TABLE "Election" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "status" "EnumElectionStatus" NOT NULL DEFAULT E'Active',
     "accountId" TEXT NOT NULL,
+    "maxSelected" INTEGER NOT NULL DEFAULT 5,
 
     CONSTRAINT "Election_pkey" PRIMARY KEY ("id")
 );
