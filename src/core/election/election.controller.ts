@@ -22,8 +22,6 @@ export class ElectionController {
   ) {}
 
   @UseGuards(HttpAuthGuard)
-  @Header('Content-Type', 'application/pdf')
-  @Header('Content-Disposition', 'attachment; filename=qr-codes.pdf')
   @Get(':id/codes/download')
   async getPDF(
     @Req() req,

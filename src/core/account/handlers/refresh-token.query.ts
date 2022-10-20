@@ -39,7 +39,7 @@ export class RefreshTokenHandler implements IQueryHandler<RefreshTokenQuery> {
     return new Promise((resolve, reject) =>
       cognitoUser.refreshSession(token, async (error, session) => {
         if (error) {
-          console.log(error, refreshToken);
+          console.log(error);
           return reject(
             new BadRequestException({
               ...error,

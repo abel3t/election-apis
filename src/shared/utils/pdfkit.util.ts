@@ -47,7 +47,6 @@ function addImagesToDoc(doc, images)  {
 }
 
 export function generatePdf(links: string[]): Promise<Buffer> {
-  console.log(links)
   return new Promise(async (resolve) => {
     const doc = new PDFDocument({
       size: 'A4',
