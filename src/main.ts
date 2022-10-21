@@ -10,7 +10,7 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 async function bootstrap() {
   const CORS_OPTIONS = {
-    origin: ['http://localhost:3000'], // or '*' or whatever is required
+    origin: ['http://localhost:3000', 'http://138.2.71.128:3000', 'https://138.2.71.128:3000'],
     allowedHeaders: [
       'Access-Control-Allow-Origin',
       'Origin',
