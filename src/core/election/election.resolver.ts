@@ -36,7 +36,7 @@ export class ElectionResolver {
   @UseGuards(AuthGuard)
   @Query((_) => [Election])
   async getElections(@CurrentUser() user: ICurrentUser): Promise<Election[]> {
-    return this.queryBus.execute(new GetElectionsQuery());
+    return this.queryBus.execute(new GetElectionsQuery(user.id));
   }
 
   @UseGuards(AuthGuard)

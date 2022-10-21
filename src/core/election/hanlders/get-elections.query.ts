@@ -2,14 +2,14 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { PrismaService } from 'shared/services';
 
 export class GetElectionsQuery {
-  constructor() {}
+  constructor(public userId: string) {}
 }
 
 @QueryHandler(GetElectionsQuery)
 export class GetElectionsHandler implements IQueryHandler<GetElectionsQuery> {
   constructor(private readonly prisma: PrismaService) {}
 
-  execute(query: GetElectionsQuery) {
-    return this.prisma.election.findMany({ orderBy: { createdAt: 'desc' }});
+  execute({ userId }: GetElectionsQuery) {
+    return this.prisma.election.findMany({ where: { accountId: userId }, orderBy: { createdAt: 'desc' }});
   }
 }
