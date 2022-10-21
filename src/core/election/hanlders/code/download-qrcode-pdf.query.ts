@@ -26,7 +26,7 @@ export class DownloadQrCodePdfHandler implements IQueryHandler<DownloadQrCodePdf
       throw new BadRequestException('You haven\'t any codes!');
     }
 
-    this.prisma.code.updateMany(
+    await this.prisma.code.updateMany(
       { where: { election: { id: electionId } }, data: { downloaded: codes[0].downloaded + 1 } });
 
     return generatePdf(codes.map(code => `${AppConfig.APP.WEBSITE_URL}/voting/?election=${electionId}&code=${code.id}`));
