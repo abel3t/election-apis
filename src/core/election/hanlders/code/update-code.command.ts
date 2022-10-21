@@ -1,7 +1,7 @@
-import { CommandHandler, IQueryHandler } from '@nestjs/cqrs';
-import { PrismaService } from 'shared/services';
-import { Field, InputType } from '@nestjs/graphql';
-import { BadRequestException } from '@nestjs/common';
+import { CommandHandler, IQueryHandler } from "@nestjs/cqrs";
+import { PrismaService } from "shared/services";
+import { Field, InputType } from "@nestjs/graphql";
+import { BadRequestException } from "@nestjs/common";
 
 @InputType()
 export class UpdateCodeInput {
@@ -49,7 +49,7 @@ export class UpdateCodeHandler implements IQueryHandler<UpdateCodeCommand> {
     });
 
     if (!existedCode) {
-      throw new BadRequestException('Code is invalid!');
+      throw new BadRequestException("Code is invalid!");
     }
 
     await this.prisma.code.update({

@@ -41,8 +41,10 @@ export class GenerateCodesHandler
     }
 
     const codes = [];
+    const date = new Date();
     for (let i = 0; i < amount; i++) {
-      codes.push({ electionId });
+      const createdAt = date.setSeconds(date.getSeconds() + i);
+      codes.push({ electionId, createdAt });
     }
 
     await this.prisma.code.createMany({ data: codes });
