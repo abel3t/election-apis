@@ -32,6 +32,7 @@ import {
   GetElectionResultQuery,
   GetElectionResultResult
 } from './hanlders/get-election-result.query';
+import { GetElectionQuery } from './hanlders/get-election.query';
 
 @Resolver((_) => Election)
 export class ElectionResolver {
@@ -75,6 +76,15 @@ export class ElectionResolver {
     @CurrentUser() user: ICurrentUser
   ) {
     return this.commandBus.execute(new UpdateCodeCommand(updateCode));
+  }
+
+  @UseGuards(AuthGuard)
+  @Query((_) => Election)
+  async getElection(
+    @Args('electionId') electionId: string,
+    @CurrentUser() user: ICurrentUser
+  ): Promise<Election> {
+    return this.queryBus.execute(new GetElectionQuery(user.id, electionId));
   }
 
   @UseGuards(AuthGuard)

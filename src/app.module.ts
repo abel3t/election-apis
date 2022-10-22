@@ -15,7 +15,14 @@ import { VoteModule } from './core/vote/vote.module';
       playground: true,
       autoSchemaFile: 'src/graphql/schema.gql',
       sortSchema: true,
-      cors: false
+      cors: false,
+      formatError: (error) => {
+        return {
+          message: error.message,
+          code: error.extensions?.code || 'SERVER_ERROR',
+          name: error?.name
+        };
+      }
     }),
     SharedModule,
     AccountModule,

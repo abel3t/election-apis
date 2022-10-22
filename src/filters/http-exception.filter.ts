@@ -6,8 +6,10 @@ import { FastifyReply } from 'fastify';
 export class HttpExceptionFilter implements GqlExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     switch (host.getType() || 'graphql') {
-      case 'graphql':
+      case 'graphql': {
         return exception;
+      }
+
       default: {
         const ctx = host.switchToHttp();
         const res = ctx.getResponse<FastifyReply>();

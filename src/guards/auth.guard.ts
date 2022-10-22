@@ -1,9 +1,7 @@
 import {
-  BadRequestException,
   ExecutionContext,
   Injectable,
-  Logger,
-  UnauthorizedException
+  Logger
 } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard as NestAuthGuard } from '@nestjs/passport';
@@ -16,16 +14,5 @@ export class AuthGuard extends NestAuthGuard('jwt') {
     const ctx = GqlExecutionContext.create(context);
 
     return ctx.getContext().req;
-  }
-
-  handleRequest(error, user, info) {
-    if (error) {
-      throw new BadRequestException(error?.message);
-    }
-    if (!user) {
-      throw new UnauthorizedException('could not authenticate with token');
-    }
-
-    return user;
   }
 }

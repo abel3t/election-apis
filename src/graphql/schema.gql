@@ -132,6 +132,7 @@ type Query {
   checkCode(input: CheckCodeInput!): CheckCodeResult!
   getCandidates(electionId: String!): [Candidate!]!
   getCodes(electionId: String!): [Code!]!
+  getElection(electionId: String!): Election!
   getElectionResult(electionId: String!): [GetElectionResultResult!]!
   getElections: [Election!]!
   getMaxSelectedCandidate(codeId: String!, electionId: String!): GetMaxSelectedCandidateResult!
