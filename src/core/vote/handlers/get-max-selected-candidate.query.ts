@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { PrismaService } from 'shared/services';
 import { BadRequestException } from '@nestjs/common';
-import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class GetMaxSelectedCandidateResult {
@@ -14,7 +14,9 @@ export class GetMaxSelectedCandidate {
 }
 
 @QueryHandler(GetMaxSelectedCandidate)
-export class GetMaxSelectedCandidateHandler implements IQueryHandler<GetMaxSelectedCandidate> {
+export class GetMaxSelectedCandidateHandler
+  implements IQueryHandler<GetMaxSelectedCandidate>
+{
   constructor(private readonly prisma: PrismaService) {}
 
   async execute({ electionId, codeId }: GetMaxSelectedCandidate) {
@@ -31,7 +33,9 @@ export class GetMaxSelectedCandidateHandler implements IQueryHandler<GetMaxSelec
       throw new BadRequestException('Code is invalid.');
     }
 
-    const election = await this.prisma.election.findUnique({ where: { id: electionId }});
+    const election = await this.prisma.election.findUnique({
+      where: { id: electionId }
+    });
 
     if (!election) {
       throw new BadRequestException('Election is invalid.');

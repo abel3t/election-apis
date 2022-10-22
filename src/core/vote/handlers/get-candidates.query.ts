@@ -7,7 +7,9 @@ export class GetVotingCandidatesQuery {
 }
 
 @QueryHandler(GetVotingCandidatesQuery)
-export class GetVotingCandidatesHandler implements IQueryHandler<GetVotingCandidatesQuery> {
+export class GetVotingCandidatesHandler
+  implements IQueryHandler<GetVotingCandidatesQuery>
+{
   constructor(private readonly prisma: PrismaService) {}
 
   async execute({ electionId, codeId }: GetVotingCandidatesQuery) {

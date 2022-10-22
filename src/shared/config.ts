@@ -1,4 +1,3 @@
-
 require('dotenv').config();
 
 interface IConfig {
@@ -7,9 +6,9 @@ interface IConfig {
     DATABASE_URL: string;
   };
   APP: {
-    CREATE_ACCOUNT_SECRET_KEY: string,
-    WEBSITE_URL: string
-  },
+    CREATE_ACCOUNT_SECRET_KEY: string;
+    WEBSITE_URL: string;
+  };
   AWS: {
     ACCESS_KEY_ID: string;
     SECRET_ACCESS_KEY: string;
@@ -18,9 +17,9 @@ interface IConfig {
       REGION: string;
       USER_POOL_ID: string;
       APP_CLIENT_ID: string;
-    },
+    };
     S3: {
-      BUCKET: string
+      BUCKET: string;
     };
   };
 }

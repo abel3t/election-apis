@@ -34,12 +34,13 @@ export class CreateCandidateCommand {
 
 @CommandHandler(CreateCandidateCommand)
 export class CreateCandidateHandler
-  implements ICommandHandler<CreateCandidateCommand> {
-  constructor(
-    private readonly prisma: PrismaService
-  ) {}
+  implements ICommandHandler<CreateCandidateCommand>
+{
+  constructor(private readonly prisma: PrismaService) {}
 
   async execute({ name, imageUrl, electionId }: CreateCandidateCommand) {
-    return this.prisma.candidate.create({ data: { name, imageUrl, election: { connect: { id: electionId } } } });
+    return this.prisma.candidate.create({
+      data: { name, imageUrl, election: { connect: { id: electionId } } }
+    });
   }
 }

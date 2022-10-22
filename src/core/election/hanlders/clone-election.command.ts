@@ -7,23 +7,34 @@ export class CloneElectionCommand {
 }
 
 @CommandHandler(CloneElectionCommand)
-export class CloneElectionsHandler implements ICommandHandler<CloneElectionCommand> {
+export class CloneElectionsHandler
+  implements ICommandHandler<CloneElectionCommand>
+{
   constructor(private readonly prisma: PrismaService) {}
 
   async execute({ electionId }: CloneElectionCommand) {
-    const existedElection = await this.prisma.election.findUnique({ where: { id: electionId }});
+    const existedElection = await this.prisma.election.findUnique({
+      where: { id: electionId }
+    });
 
     if (!existedElection) {
-      throw new BadRequestException('electionId is invalid.')
+      throw new BadRequestException('electionId is invalid.');
     }
 
     const copiedElectionName = `Copy of ${existedElection.name}`;
 
-    const newElection = await this.prisma.election.create({ data: { name: copiedElectionName, account: { connect: { id: existedElection.accountId } } } });
+    const newElection = await this.prisma.election.create({
+      data: {
+        name: copiedElectionName,
+        account: { connect: { id: existedElection.accountId } }
+      }
+    });
 
-    const existedCandidates = await this.prisma.candidate.findMany({ where: { election: { id: electionId } } });
+    const existedCandidates = await this.prisma.candidate.findMany({
+      where: { election: { id: electionId } }
+    });
 
-    const newCandidates = existedCandidates.map(candidate => ({
+    const newCandidates = existedCandidates.map((candidate) => ({
       name: candidate.name,
       imageUrl: candidate.imageUrl,
       electionId: newElection.id

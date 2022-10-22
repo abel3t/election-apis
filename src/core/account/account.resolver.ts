@@ -5,10 +5,19 @@ import { CurrentUser, ICurrentUser } from 'decorators/user.decorator';
 import { AuthGuard } from 'guards/auth.guard';
 import { Account } from 'models/Account';
 import { LoginResult } from './dto/login-result.dto';
-import { AccountLoginInput, AccountLoginQuery } from './handlers/account-login.query';
+import {
+  AccountLoginInput,
+  AccountLoginQuery
+} from './handlers/account-login.query';
 import { GetProfileQuery, SignUpResult } from './handlers/get-profile.query';
-import { CreateAdminAccountCommand, CreateAdminAccountInput } from './handlers/create-account.command';
-import { RefreshTokenInput, RefreshTokenQuery } from './handlers/refresh-token.query';
+import {
+  CreateAdminAccountCommand,
+  CreateAdminAccountInput
+} from './handlers/create-account.command';
+import {
+  RefreshTokenInput,
+  RefreshTokenQuery
+} from './handlers/refresh-token.query';
 
 @Resolver((_) => Account)
 export class AccountResolver {
@@ -19,9 +28,7 @@ export class AccountResolver {
 
   @Mutation((_) => SignUpResult)
   createAccount(@Args('input') adminInput: CreateAdminAccountInput) {
-    return this.commandBus.execute(
-      new CreateAdminAccountCommand(adminInput)
-    );
+    return this.commandBus.execute(new CreateAdminAccountCommand(adminInput));
   }
 
   @Mutation((_) => LoginResult)
@@ -34,7 +41,10 @@ export class AccountResolver {
   @Mutation((_) => LoginResult)
   refreshToken(@Args('input') refreshTokenInput: RefreshTokenInput) {
     return this.queryBus.execute(
-      new RefreshTokenQuery(refreshTokenInput.email, refreshTokenInput.refreshToken)
+      new RefreshTokenQuery(
+        refreshTokenInput.email,
+        refreshTokenInput.refreshToken
+      )
     );
   }
 

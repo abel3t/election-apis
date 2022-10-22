@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { Field, InputType, Int } from "@nestjs/graphql";
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { PrismaService } from 'shared/services';
-import { GraphQLString } from "graphql/type";
+import { GraphQLString } from 'graphql/type';
 
 @InputType()
 export class CreateElectionInput {
@@ -30,18 +30,21 @@ export class CreateElectionCommand {
 
 @CommandHandler(CreateElectionCommand)
 export class CreateElectionHandler
-  implements ICommandHandler<CreateElectionCommand> {
-  constructor(
-    private readonly prisma: PrismaService
-  ) {}
+  implements ICommandHandler<CreateElectionCommand>
+{
+  constructor(private readonly prisma: PrismaService) {}
 
   async execute({ name, maxSelected, userId }: CreateElectionCommand) {
-    const existedElection = await this.prisma.election.findFirst({ where: { name, maxSelected, account: { id: userId } } });
+    const existedElection = await this.prisma.election.findFirst({
+      where: { name, maxSelected, account: { id: userId } }
+    });
 
     if (existedElection) {
       throw new BadRequestException('Election is already exists!');
     }
 
-    return this.prisma.election.create({ data: { name, account: { connect: { id: userId } } } });
+    return this.prisma.election.create({
+      data: { name, account: { connect: { id: userId } } }
+    });
   }
 }

@@ -1,6 +1,10 @@
 import { Field, InputType } from '@nestjs/graphql';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { CognitoRefreshToken, CognitoUser, CognitoUserPool } from 'amazon-cognito-identity-js';
+import {
+  CognitoRefreshToken,
+  CognitoUser,
+  CognitoUserPool
+} from 'amazon-cognito-identity-js';
 import { AppConfig } from '../../../shared/config';
 import { BadRequestException } from '@nestjs/common';
 
@@ -26,7 +30,6 @@ export class RefreshTokenHandler implements IQueryHandler<RefreshTokenQuery> {
       UserPoolId: AppConfig.AWS.COGNITO.USER_POOL_ID,
       ClientId: AppConfig.AWS.COGNITO.APP_CLIENT_ID
     });
-
   }
 
   execute({ email, refreshToken }: RefreshTokenQuery) {
@@ -56,6 +59,5 @@ export class RefreshTokenHandler implements IQueryHandler<RefreshTokenQuery> {
         });
       })
     );
-
   }
 }

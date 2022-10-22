@@ -17,12 +17,20 @@ import { S3Service } from 'shared/services/s3.service';
 import { GetElectionResultHandler } from './hanlders/get-election-result.query';
 
 const QueryHandlers = [
-  GetElectionsHandler, GetCandidatesHandler, GetCodesHandler, DownloadQrCodePdfHandler,
+  GetElectionsHandler,
+  GetCandidatesHandler,
+  GetCodesHandler,
+  DownloadQrCodePdfHandler,
   GetElectionResultHandler
 ];
 const CommandHandlers = [
-  CreateElectionHandler, GenerateCodesHandler, CreateCandidateHandler, UpdateCodeHandler,
-  CloneElectionsHandler, DeleteCandidateHandler, UpdateElectionHandler
+  CreateElectionHandler,
+  GenerateCodesHandler,
+  CreateCandidateHandler,
+  UpdateCodeHandler,
+  CloneElectionsHandler,
+  DeleteCandidateHandler,
+  UpdateElectionHandler
 ];
 
 @Module({

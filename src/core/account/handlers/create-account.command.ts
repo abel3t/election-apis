@@ -45,7 +45,8 @@ export class CreateAdminAccountCommand {
 
 @CommandHandler(CreateAdminAccountCommand)
 export class CreateAdminAccountHandler
-  implements ICommandHandler<CreateAdminAccountCommand> {
+  implements ICommandHandler<CreateAdminAccountCommand>
+{
   constructor(
     private readonly prisma: PrismaService,
     private readonly cognitoService: CognitoService

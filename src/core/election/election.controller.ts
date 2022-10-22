@@ -23,14 +23,12 @@ export class ElectionController {
 
   @UseGuards(HttpAuthGuard)
   @Get(':id/codes/download')
-  async getPDF(
-    @Req() req,
-    @Res() res: any,
-    @Param('id') electionId: string
-  ) {
+  async getPDF(@Req() req, @Res() res: any, @Param('id') electionId: string) {
     const user = req.user;
 
-    const buffer = await this.queryBus.execute(new DownloadQrCodePdfQuery(user.id, electionId));
+    const buffer = await this.queryBus.execute(
+      new DownloadQrCodePdfQuery(user.id, electionId)
+    );
 
     if (!buffer) {
       throw new BadRequestException('Error');

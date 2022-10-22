@@ -1,7 +1,7 @@
-import { BadRequestException } from "@nestjs/common";
-import { CommandHandler, ICommandHandler } from "@nestjs/cqrs";
-import { Field, InputType } from "@nestjs/graphql";
-import { PrismaService } from "shared/services";
+import { BadRequestException } from '@nestjs/common';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { Field, InputType } from '@nestjs/graphql';
+import { PrismaService } from 'shared/services';
 
 @InputType()
 export class GenerateCodesCodeInput {
@@ -30,14 +30,13 @@ export class GenerateCodesCommand {
 
 @CommandHandler(GenerateCodesCommand)
 export class GenerateCodesHandler
-  implements ICommandHandler<GenerateCodesCommand> {
-  constructor(
-    private readonly prisma: PrismaService
-  ) {}
+  implements ICommandHandler<GenerateCodesCommand>
+{
+  constructor(private readonly prisma: PrismaService) {}
 
   async execute({ amount, electionId, userId }: GenerateCodesCommand) {
     if (!amount) {
-      throw new BadRequestException("Amount is invalid!");
+      throw new BadRequestException('Amount is invalid!');
     }
 
     const codes = [];

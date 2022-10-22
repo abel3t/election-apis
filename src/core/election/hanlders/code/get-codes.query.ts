@@ -1,5 +1,5 @@
-import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
-import { PrismaService } from "shared/services";
+import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
+import { PrismaService } from 'shared/services';
 
 export class GetCodesQuery {
   constructor(public readonly electionId: string) {}
@@ -10,7 +10,9 @@ export class GetCodesHandler implements IQueryHandler<GetCodesQuery> {
   constructor(private readonly prisma: PrismaService) {}
 
   execute({ electionId }: GetCodesQuery) {
-    return this.prisma.code.findMany(
-      { where: { election: { id: electionId } }, orderBy: { id: "asc" } });
+    return this.prisma.code.findMany({
+      where: { election: { id: electionId } },
+      orderBy: { id: 'asc' }
+    });
   }
 }

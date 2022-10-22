@@ -3,7 +3,6 @@ import { config as AwsConfig, S3 } from 'aws-sdk';
 
 import { AppConfig } from '../config';
 
-
 @Injectable()
 export class S3Service {
   logger = new Logger('CognitoService');
@@ -24,11 +23,12 @@ export class S3Service {
 
   async uploadFile(file: File, fileName: string) {
     const s3 = new S3();
-    const uploadResult = await s3.upload({
-      Bucket: this.s3Bucket,
-      Body: file,
-      Key: `${new Date().toISOString()}-${fileName || 'unknown'}`
-    })
+    const uploadResult = await s3
+      .upload({
+        Bucket: this.s3Bucket,
+        Body: file,
+        Key: `${new Date().toISOString()}-${fileName || 'unknown'}`
+      })
       .promise();
 
     return uploadResult.Location;

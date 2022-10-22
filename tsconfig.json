@@ -19,13 +19,6 @@
     "noFallthroughCasesInSwitch": false
   },
   "baseUrl": "./src",
-  "include": [
-    "src/**/*",
-    ".eslintrc.js"
-  ],
-  "exclude": [
-    "build",
-    "node_modules",
-    "**/*.spec.ts"
-  ]
+  "include": ["src/**/*", ".eslintrc.js"],
+  "exclude": ["build", "node_modules", "**/*.spec.ts"]
 }

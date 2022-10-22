@@ -33,21 +33,22 @@ export class CreateVoteCommand {
 }
 
 @CommandHandler(CreateVoteCommand)
-export class CreateVoteHandler
-  implements ICommandHandler<CreateVoteCommand> {
+export class CreateVoteHandler implements ICommandHandler<CreateVoteCommand> {
   constructor(
     private readonly prisma: PrismaService,
     private readonly queryBus: QueryBus
   ) {}
 
   async execute({ electionId, codeId, candidateIds }: CreateVoteCommand) {
-    const { isValid } = await this.queryBus.execute(new CheckCodeQuery(electionId, codeId));
+    const { isValid } = await this.queryBus.execute(
+      new CheckCodeQuery(electionId, codeId)
+    );
 
     if (!isValid) {
       throw new BadRequestException('Your code is invalid!');
     }
 
-    const votes = candidateIds.map(candidateId => {
+    const votes = candidateIds.map((candidateId) => {
       return { electionId, codeId, candidateId };
     });
 

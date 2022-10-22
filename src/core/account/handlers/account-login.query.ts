@@ -27,7 +27,9 @@ export class AccountLoginHandler implements IQueryHandler<AccountLoginQuery> {
   ) {}
 
   async execute({ email, password }) {
-    const existedUser = await this.prisma.account.findUnique({ where: { email } });
+    const existedUser = await this.prisma.account.findUnique({
+      where: { email }
+    });
     if (!existedUser) {
       throw new BadRequestException('User not found!');
     }

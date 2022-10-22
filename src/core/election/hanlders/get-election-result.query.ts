@@ -15,7 +15,6 @@ export class GetElectionResultResult extends Candidate {
   @Field(() => Int)
   votes: number;
 
-
   @Field(() => Int)
   totalCodes: number;
 }
@@ -25,11 +24,15 @@ export class GetElectionResultQuery {
 }
 
 @QueryHandler(GetElectionResultQuery)
-export class GetElectionResultHandler implements IQueryHandler<GetElectionResultQuery> {
+export class GetElectionResultHandler
+  implements IQueryHandler<GetElectionResultQuery>
+{
   constructor(private readonly prisma: PrismaService) {}
 
   async execute({ electionId, accountId }: GetElectionResultQuery) {
-    const existedElection = await this.prisma.election.findFirst({ where: { id: electionId, accountId } });
+    const existedElection = await this.prisma.election.findFirst({
+      where: { id: electionId, accountId }
+    });
 
     if (!existedElection) {
       throw new BadRequestException('Election is invalid.');
@@ -44,10 +47,12 @@ export class GetElectionResultHandler implements IQueryHandler<GetElectionResult
     const votesGrouped = groupBy(electionVotes, 'candidateId');
     const totalCodes = uniqBy(electionVotes, 'codeId');
 
-    const groupedVotes: GetElectionResultResult[] = Object.entries(votesGrouped).map(([candidateId, votes]: [string, Vote[]]) => {
+    const groupedVotes: GetElectionResultResult[] = Object.entries(
+      votesGrouped
+    ).map(([candidateId, votes]: [string, Vote[]]) => {
       return {
         ...(candidatesMapped[candidateId] || {}),
-        codeIds: votes.map(vote => vote.codeId),
+        codeIds: votes.map((vote) => vote.codeId),
         votes: votes?.length || 0,
         totalCodes: totalCodes?.length || 0
       } as GetElectionResultResult;
