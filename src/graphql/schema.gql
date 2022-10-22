@@ -130,6 +130,7 @@ type Mutation {
 
 type Query {
   checkCode(input: CheckCodeInput!): CheckCodeResult!
+  deleteElection(electionId: String!): Boolean!
   getCandidates(electionId: String!): [Candidate!]!
   getCodes(electionId: String!): [Code!]!
   getElection(electionId: String!): Election!

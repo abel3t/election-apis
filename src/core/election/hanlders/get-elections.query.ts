@@ -11,7 +11,7 @@ export class GetElectionsHandler implements IQueryHandler<GetElectionsQuery> {
 
   execute({ userId }: GetElectionsQuery) {
     return this.prisma.election.findMany({
-      where: { accountId: userId },
+      where: { accountId: userId, isDeleted: false },
       orderBy: { createdAt: 'desc' }
     });
   }

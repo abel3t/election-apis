@@ -13,8 +13,8 @@ export class CloneElectionsHandler
   constructor(private readonly prisma: PrismaService) {}
 
   async execute({ electionId }: CloneElectionCommand) {
-    const existedElection = await this.prisma.election.findUnique({
-      where: { id: electionId }
+    const existedElection = await this.prisma.election.findFirst({
+      where: { id: electionId, isDeleted: false }
     });
 
     if (!existedElection) {
@@ -31,7 +31,7 @@ export class CloneElectionsHandler
     });
 
     const existedCandidates = await this.prisma.candidate.findMany({
-      where: { election: { id: electionId } }
+      where: { election: { id: electionId }, isDeleted: false }
     });
 
     const newCandidates = existedCandidates.map((candidate) => ({

@@ -14,14 +14,14 @@ export class DeleteCandidateHandler
 
   async execute({ electionId, candidateId }: DeleteCandidateCommand) {
     const existedCandidate = await this.prisma.candidate.findFirst({
-      where: { id: candidateId, electionId }
+      where: { id: candidateId, electionId, isDeleted: false }
     });
 
     if (!existedCandidate) {
       throw new BadRequestException('candidateId is invalid.');
     }
 
-    await this.prisma.candidate.delete({ where: { id: candidateId } });
+    await this.prisma.candidate.update({ where: { id: candidateId }, data: { isDeleted: true } });
 
     return true;
   }

@@ -19,7 +19,7 @@ export class DownloadQrCodePdfHandler
 
   async execute({ userId, electionId }: DownloadQrCodePdfQuery) {
     const existedElection = this.prisma.election
-      .findFirst({ where: { id: electionId, accountId: userId } })
+      .findFirst({ where: { id: electionId, accountId: userId, isDeleted: false } })
       .then((data) => data);
 
     if (!existedElection) {
@@ -27,7 +27,7 @@ export class DownloadQrCodePdfHandler
     }
 
     const codes = await this.prisma.code.findMany({
-      where: { election: { id: electionId } }
+      where: { election: { id: electionId, isDeleted: false } }
     });
 
     if (!codes.length) {

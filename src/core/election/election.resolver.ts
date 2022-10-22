@@ -33,6 +33,7 @@ import {
   GetElectionResultResult
 } from './hanlders/get-election-result.query';
 import { GetElectionQuery } from './hanlders/get-election.query';
+import { DeleteElectionCommand } from "./hanlders/delete-election.command";
 
 @Resolver((_) => Election)
 export class ElectionResolver {
@@ -85,6 +86,17 @@ export class ElectionResolver {
     @CurrentUser() user: ICurrentUser
   ): Promise<Election> {
     return this.queryBus.execute(new GetElectionQuery(user.id, electionId));
+  }
+
+  @UseGuards(AuthGuard)
+  @Query((_) => Boolean)
+  async deleteElection(
+    @Args('electionId') electionId: string,
+    @CurrentUser() user: ICurrentUser
+  ): Promise<Election> {
+    return this.commandBus.execute(
+      new DeleteElectionCommand(user.id, electionId)
+    );
   }
 
   @UseGuards(AuthGuard)

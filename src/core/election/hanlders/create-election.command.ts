@@ -36,7 +36,7 @@ export class CreateElectionHandler
 
   async execute({ name, maxSelected, userId }: CreateElectionCommand) {
     const existedElection = await this.prisma.election.findFirst({
-      where: { name, maxSelected, account: { id: userId } }
+      where: { name, account: { id: userId }, isDeleted: false }
     });
 
     if (existedElection) {
@@ -44,7 +44,7 @@ export class CreateElectionHandler
     }
 
     return this.prisma.election.create({
-      data: { name, account: { connect: { id: userId } } }
+      data: { name, maxSelected, account: { connect: { id: userId } } }
     });
   }
 }

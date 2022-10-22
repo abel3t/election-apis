@@ -11,7 +11,7 @@ export class GetElectionHandlerGetElectionHandler implements IQueryHandler<GetEl
 
   execute({ userId, electionId }: GetElectionQuery) {
     return this.prisma.election.findFirst({
-      where: { id: electionId, accountId: userId }
+      where: { id: electionId, accountId: userId, isDeleted: false }
     });
   }
 }
