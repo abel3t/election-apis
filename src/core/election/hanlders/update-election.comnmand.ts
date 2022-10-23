@@ -18,7 +18,7 @@ export class UpdateElectionHandler
 
   async execute({ electionId, name, maxSelected }: UpdateElectionCommand) {
     const existedElection = await this.prisma.election.findFirst({
-      where: { id: electionId }
+      where: { id: electionId, isDeleted: false }
     });
 
     if (!existedElection) {

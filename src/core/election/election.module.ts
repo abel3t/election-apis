@@ -15,8 +15,8 @@ import { DeleteCandidateHandler } from './hanlders/candidate/delete-candidate.co
 import { UpdateElectionHandler } from './hanlders/update-election.comnmand';
 import { S3Service } from 'shared/services/s3.service';
 import { GetElectionResultHandler } from './hanlders/get-election-result.query';
-import { GetElectionHandlerGetElectionHandler } from "./hanlders/get-election.query";
-import { DeleteElectionHandler } from "./hanlders/delete-election.command";
+import { GetElectionHandlerGetElectionHandler } from './hanlders/get-election.query';
+import { DeleteElectionHandler } from './hanlders/delete-election.command';
 
 const QueryHandlers = [
   GetElectionsHandler,

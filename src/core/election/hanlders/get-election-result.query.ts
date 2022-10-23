@@ -40,7 +40,9 @@ export class GetElectionResultHandler
 
     const [electionVotes, candidates] = await Promise.all([
       this.prisma.vote.findMany({ where: { electionId } }),
-      this.prisma.candidate.findMany({ where: { electionId, isDeleted: false } })
+      this.prisma.candidate.findMany({
+        where: { electionId, isDeleted: false }
+      })
     ]);
 
     const candidatesMapped: Record<string, Candidate> = keyBy(candidates, 'id');

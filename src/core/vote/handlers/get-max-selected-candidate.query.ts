@@ -25,7 +25,8 @@ export class GetMaxSelectedCandidateHandler
         id: codeId,
         electionId,
         isActive: true,
-        isUsed: false
+        isUsed: false,
+        isDeleted: false
       }
     });
 

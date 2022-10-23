@@ -33,7 +33,7 @@ import {
   GetElectionResultResult
 } from './hanlders/get-election-result.query';
 import { GetElectionQuery } from './hanlders/get-election.query';
-import { DeleteElectionCommand } from "./hanlders/delete-election.command";
+import { DeleteElectionCommand } from './hanlders/delete-election.command';
 
 @Resolver((_) => Election)
 export class ElectionResolver {

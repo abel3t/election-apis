@@ -49,7 +49,8 @@ export class UpdateCodeHandler implements IQueryHandler<UpdateCodeCommand> {
     const existedCode = await this.prisma.code.findFirst({
       where: {
         id: codeId,
-        electionId
+        electionId,
+        isDeleted: false
       }
     });
 

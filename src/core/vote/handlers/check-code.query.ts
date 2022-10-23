@@ -31,7 +31,8 @@ export class CheckCodeHandler implements IQueryHandler<CheckCodeQuery> {
         id: codeId,
         electionId,
         isActive: true,
-        isUsed: false
+        isUsed: false,
+        isDeleted: false
       }
     });
 

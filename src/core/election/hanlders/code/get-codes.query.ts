@@ -11,7 +11,10 @@ export class GetCodesHandler implements IQueryHandler<GetCodesQuery> {
 
   execute({ electionId }: GetCodesQuery) {
     return this.prisma.code.findMany({
-      where: { election: { id: electionId, isDeleted: false } },
+      where: {
+        election: { id: electionId, isDeleted: false },
+        isDeleted: false
+      },
       orderBy: { id: 'asc' }
     });
   }

@@ -31,7 +31,10 @@ export class CloneElectionsHandler
     });
 
     const existedCandidates = await this.prisma.candidate.findMany({
-      where: { election: { id: electionId }, isDeleted: false }
+      where: {
+        election: { id: electionId, isDeleted: false },
+        isDeleted: false
+      }
     });
 
     const newCandidates = existedCandidates.map((candidate) => ({

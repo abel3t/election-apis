@@ -50,6 +50,8 @@ export class GenerateCodesHandler
 
     await this.prisma.code.createMany({ data: codes });
 
-    return this.prisma.code.findMany({ where: { electionId, isDeleted: false } });
+    return this.prisma.code.findMany({
+      where: { electionId, isDeleted: false }
+    });
   }
 }

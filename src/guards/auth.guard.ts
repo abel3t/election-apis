@@ -1,8 +1,4 @@
-import {
-  ExecutionContext,
-  Injectable,
-  Logger
-} from '@nestjs/common';
+import { ExecutionContext, Injectable, Logger } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { AuthGuard as NestAuthGuard } from '@nestjs/passport';
 

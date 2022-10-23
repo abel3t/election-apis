@@ -21,7 +21,10 @@ export class DeleteCandidateHandler
       throw new BadRequestException('candidateId is invalid.');
     }
 
-    await this.prisma.candidate.update({ where: { id: candidateId }, data: { isDeleted: true } });
+    await this.prisma.candidate.update({
+      where: { id: candidateId },
+      data: { isDeleted: true }
+    });
 
     return true;
   }
