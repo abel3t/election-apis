@@ -6,6 +6,9 @@ export class Code {
   id: string;
 
   @Field()
+  text: string;
+
+  @Field()
   downloaded: number;
 
   @Field()

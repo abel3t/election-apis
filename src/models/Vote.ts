@@ -6,6 +6,9 @@ export class Vote {
   id: string;
 
   @Field()
+  text: string;
+
+  @Field()
   electionId: string;
 
   @Field()

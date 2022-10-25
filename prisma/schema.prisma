@@ -51,6 +51,7 @@ model Candidate {
 
 model Code {
     id              String              @id @default(cuid())
+    text            String
     isActive        Boolean             @default(true)
     isUsed          Boolean             @default(false)
     downloaded      Int                 @default(0)

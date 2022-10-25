@@ -15,7 +15,7 @@ export class GetCodesHandler implements IQueryHandler<GetCodesQuery> {
         election: { id: electionId, isDeleted: false },
         isDeleted: false
       },
-      orderBy: { id: 'asc' }
+      orderBy: { text: 'asc' }
     });
   }
 }

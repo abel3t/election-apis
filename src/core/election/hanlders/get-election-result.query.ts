@@ -12,6 +12,9 @@ export class GetElectionResultResult extends Candidate {
   @Field(() => [GraphQLString])
   codeIds: string[];
 
+  @Field(() => [GraphQLString])
+  texts: string[];
+
   @Field(() => Int)
   votes: number;
 
@@ -38,12 +41,22 @@ export class GetElectionResultHandler
       throw new BadRequestException('Election is invalid.');
     }
 
-    const [electionVotes, candidates] = await Promise.all([
-      this.prisma.vote.findMany({ where: { electionId } }),
+    let [electionVotes, candidates] = await Promise.all([
+      this.prisma.vote.findMany({
+        where: { electionId },
+        include: { code: true }
+      }),
       this.prisma.candidate.findMany({
         where: { electionId, isDeleted: false }
       })
     ]);
+
+    electionVotes = electionVotes.map((electionVote) => ({
+      ...electionVote,
+      codeId: electionVote.code.id,
+      text: electionVote.code?.text,
+      code: undefined
+    }));
 
     const candidatesMapped: Record<string, Candidate> = keyBy(candidates, 'id');
     const votesGrouped = groupBy(electionVotes, 'candidateId');
@@ -55,8 +68,10 @@ export class GetElectionResultHandler
       return {
         ...(candidatesMapped[candidateId] || {}),
         codeIds: votes.map((vote) => vote.codeId),
+        texts: votes.map((vote) => vote.text),
         votes: votes?.length || 0,
-        totalCodes: totalCodes?.length || 0
+        totalCodes: totalCodes?.length || 0,
+        codes: totalCodes
       } as GetElectionResultResult;
     });
 

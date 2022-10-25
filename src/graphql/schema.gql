@@ -42,6 +42,7 @@ type Code {
   id: String!
   isActive: Boolean!
   isUsed: Boolean!
+  text: String!
   updatedAt: DateTime!
 }
 
@@ -98,6 +99,7 @@ type GetElectionResultResult {
   id: String!
   imageUrl: String
   name: String!
+  texts: [String!]!
   totalCodes: Int!
   updatedAt: DateTime!
   votes: Int!

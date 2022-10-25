@@ -45,7 +45,9 @@ export class GenerateCodesHandler
       date.setSeconds(date.getSeconds() + i);
 
       const createdAt = date.toISOString();
-      codes.push({ electionId, createdAt });
+
+      const text = 'C' + `${i+1}`.padStart(4, '0');
+      codes.push({ electionId, text, createdAt });
     }
 
     await this.prisma.code.createMany({ data: codes });
