@@ -91,16 +91,19 @@ export class CreateAdminAccountHandler
             role: Role.Admin
           }
         });
-        await this.cognitoService.updateUserCognitoAttributes(email.toLowerCase(), [
-          {
-            Name: 'custom:id',
-            Value: `${user.id}`
-          },
-          {
-            Name: 'custom:role',
-            Value: `${Role.Admin}`
-          }
-        ]);
+        await this.cognitoService.updateUserCognitoAttributes(
+          email.toLowerCase(),
+          [
+            {
+              Name: 'custom:id',
+              Value: `${user.id}`
+            },
+            {
+              Name: 'custom:role',
+              Value: `${Role.Admin}`
+            }
+          ]
+        );
         return user;
       })
       .catch((error) => {

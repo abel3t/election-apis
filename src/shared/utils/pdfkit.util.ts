@@ -1,5 +1,6 @@
 import * as PDFDocument from 'pdfkit';
 import { generateQrCode } from './qrcode.util';
+import { AppConfig } from '../config';
 
 function drawCutLine(doc) {
   doc.moveTo(297, 0).lineTo(297, 840).dash(3, { space: 0 }).stroke();
@@ -27,20 +28,22 @@ function addImagesToDoc(doc, images) {
       doc.addPage();
     }
 
+    const [x, y] = positions[i % itemPerPage];
     doc
-      .image(images[i], ...positions[i % itemPerPage], {
+      .image(images[i]?.link, ...positions[i % itemPerPage], {
         fit: sizes,
         align: 'center',
         valign: 'center'
       })
-      .rect(...positions[i % itemPerPage], ...sizes)
+      .rect(x, y, ...sizes)
+      .text(images[i]?.text, x + 65, y - 15)
       .stroke();
   }
 
   drawCutLine(doc);
 }
 
-export function generatePdf(links: string[]): Promise<Buffer> {
+export function generatePdf(electionId: string, codes: any): Promise<Buffer> {
   return new Promise(async (resolve) => {
     const doc = new PDFDocument({
       size: 'A4',
@@ -48,8 +51,13 @@ export function generatePdf(links: string[]): Promise<Buffer> {
     });
 
     const images = await Promise.all(
-      links.map((text) => {
-        return generateQrCode(text);
+      codes.map(async (code) => {
+        return {
+          text: code.text,
+          link: await generateQrCode(
+            `${AppConfig.APP.WEBSITE_URL}/voting/?election=${electionId}&code=${code.id}`
+          )
+        };
       })
     );
 

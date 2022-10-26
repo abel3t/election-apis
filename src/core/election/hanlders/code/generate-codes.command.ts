@@ -46,7 +46,7 @@ export class GenerateCodesHandler
 
       const createdAt = date.toISOString();
 
-      const text = 'C' + `${i+1}`.padStart(4, '0');
+      const text = 'C' + `${i + 1}`.padStart(4, '0');
       codes.push({ electionId, text, createdAt });
     }
 

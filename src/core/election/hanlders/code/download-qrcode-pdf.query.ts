@@ -2,7 +2,6 @@ import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { PrismaService } from 'shared/services';
 import { BadRequestException } from '@nestjs/common';
 import { generatePdf } from 'shared/utils/pdfkit.util';
-import { AppConfig } from '../../../../shared/config';
 
 export class DownloadQrCodePdfQuery {
   constructor(
@@ -44,11 +43,6 @@ export class DownloadQrCodePdfHandler
       data: { downloaded: codes[0].downloaded + 1 }
     });
 
-    return generatePdf(
-      codes.map(
-        (code) =>
-          `${AppConfig.APP.WEBSITE_URL}/voting/?election=${electionId}&code=${code.id}`
-      )
-    );
+    return generatePdf(electionId, codes);
   }
 }
