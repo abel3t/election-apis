@@ -27,9 +27,14 @@ export class AccountLoginHandler implements IQueryHandler<AccountLoginQuery> {
   ) {}
 
   async execute({ email, password }) {
+    if (!email) {
+      throw new BadRequestException('Email is invalid!');
+    }
+
     const existedUser = await this.prisma.account.findUnique({
-      where: { email }
+      where: { email: email.toLowerCase() }
     });
+
     if (!existedUser) {
       throw new BadRequestException('User not found!');
     }

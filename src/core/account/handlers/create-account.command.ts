@@ -63,8 +63,12 @@ export class CreateAdminAccountHandler
       throw new ForbiddenException('Forbidden!');
     }
 
+    if (!email) {
+      throw new BadRequestException('Email is invalid!');
+    }
+
     const existedUser = await this.prisma.account.findUnique({
-      where: { email },
+      where: { email: email.toLowerCase() },
       select: { id: true }
     });
 
@@ -74,20 +78,20 @@ export class CreateAdminAccountHandler
 
     return this.cognitoService
       .signUp({
-        email,
+        email: email.toLowerCase(),
         password,
         role: Role.Admin
       })
       .then(async () => {
         const user = await this.prisma.account.create({
           data: {
-            email,
+            email: email.toLowerCase(),
             firstName,
             lastName,
             role: Role.Admin
           }
         });
-        await this.cognitoService.updateUserCognitoAttributes(email, [
+        await this.cognitoService.updateUserCognitoAttributes(email.toLowerCase(), [
           {
             Name: 'custom:id',
             Value: `${user.id}`
