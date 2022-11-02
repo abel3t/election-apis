@@ -1,5 +1,5 @@
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { Field, InputType } from '@nestjs/graphql';
+import { Field, GraphQLISODateTime, InputType } from "@nestjs/graphql";
 import { PrismaService } from 'shared/services';
 import { CheckCodeQuery } from './check-code.query';
 import { BadRequestException } from '@nestjs/common';
@@ -12,6 +12,9 @@ export class CreateVoteInput {
   @Field(() => String)
   codeId: string;
 
+  @Field(() => GraphQLISODateTime)
+  date: Date;
+
   @Field(() => [String])
   candidateIds: string[];
 }
@@ -19,6 +22,7 @@ export class CreateVoteInput {
 interface ICreateVoteCommand {
   electionId: string;
   codeId: string;
+  date: Date;
   candidateIds: string[];
 }
 
@@ -29,6 +33,7 @@ export class CreateVoteCommand {
 
   public readonly electionId: string;
   public readonly codeId: string;
+  public readonly date: Date;
   public readonly candidateIds: string[];
 }
 
@@ -39,7 +44,7 @@ export class CreateVoteHandler implements ICommandHandler<CreateVoteCommand> {
     private readonly queryBus: QueryBus
   ) {}
 
-  async execute({ electionId, codeId, candidateIds }: CreateVoteCommand) {
+  async execute({ electionId, codeId, candidateIds, date }: CreateVoteCommand) {
     const { isValid } = await this.queryBus.execute(
       new CheckCodeQuery(electionId, codeId)
     );
@@ -49,7 +54,7 @@ export class CreateVoteHandler implements ICommandHandler<CreateVoteCommand> {
     }
 
     const votes = candidateIds.map((candidateId) => {
-      return { electionId, codeId, candidateId };
+      return { electionId, codeId, candidateId, createdAt: date };
     });
 
     await Promise.all([

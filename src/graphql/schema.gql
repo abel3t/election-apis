@@ -68,6 +68,7 @@ input CreateElectionInput {
 input CreateVoteInput {
   candidateIds: [String!]!
   codeId: String!
+  date: DateTime!
   electionId: String!
 }
 
