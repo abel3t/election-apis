@@ -12,11 +12,11 @@ export class GetElectionResultResult extends Candidate {
   @Field(() => [GraphQLString])
   codeIds: string[];
 
-  @Field(() => [GraphQLString])
-  texts: string[];
+  @Field(() => [Vote])
+  votes: Vote[]
 
   @Field(() => Int)
-  votes: number;
+  totalVotes: number;
 
   @Field(() => Int)
   totalCodes: number;
@@ -68,13 +68,13 @@ export class GetElectionResultHandler
       return {
         ...(candidatesMapped[candidateId] || {}),
         codeIds: votes.map((vote) => vote.codeId),
-        texts: votes.map((vote) => vote.text),
-        votes: votes?.length || 0,
+        votes,
+        totalVotes: votes?.length || 0,
         totalCodes: totalCodes?.length || 0,
         codes: totalCodes
       } as GetElectionResultResult;
     });
 
-    return orderBy(groupedVotes, 'votes', 'desc');
+    return orderBy(groupedVotes, 'totalVotes', 'desc');
   }
 }

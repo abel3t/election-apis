@@ -100,10 +100,10 @@ type GetElectionResultResult {
   id: String!
   imageUrl: String
   name: String!
-  texts: [String!]!
   totalCodes: Int!
+  totalVotes: Int!
   updatedAt: DateTime!
-  votes: Int!
+  votes: [Vote!]!
 }
 
 type GetMaxSelectedCandidateResult {
@@ -159,4 +159,15 @@ input UpdateCodeInput {
   downloaded: Float!
   electionId: String!
   isActive: Boolean!
+}
+
+"""Vote"""
+type Vote {
+  candidateId: String!
+  codeId: String!
+  createdAt: DateTime!
+  electionId: String!
+  id: String!
+  text: String!
+  updatedAt: DateTime!
 }
