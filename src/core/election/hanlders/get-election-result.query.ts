@@ -68,7 +68,7 @@ export class GetElectionResultHandler
       return {
         ...(candidatesMapped[candidateId] || {}),
         codeIds: votes.map((vote) => vote.codeId),
-        votes,
+        votes: orderBy(votes, 'text', 'asc'),
         totalVotes: votes?.length || 0,
         totalCodes: totalCodes?.length || 0,
         codes: totalCodes
