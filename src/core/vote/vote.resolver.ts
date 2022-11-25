@@ -17,6 +17,7 @@ import {
   GetMaxSelectedCandidate,
   GetMaxSelectedCandidateResult
 } from './handlers/get-max-selected-candidate.query';
+import { GetElectionTitle, GetElectionTitleResult } from "./handlers/get-election-title.query";
 
 @Resolver((_) => Vote)
 export class VoteResolver {
@@ -55,6 +56,16 @@ export class VoteResolver {
   ) {
     return this.queryBus.execute(
       new GetMaxSelectedCandidate(electionId, codeId)
+    );
+  }
+
+
+  @Query((_) => GetElectionTitleResult)
+  async getElectionTitle(
+    @Args('electionId') electionId: string
+  ) {
+    return this.queryBus.execute(
+      new GetElectionTitle(electionId)
     );
   }
 }

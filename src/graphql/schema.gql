@@ -106,6 +106,10 @@ type GetElectionResultResult {
   votes: [Vote!]!
 }
 
+type GetElectionTitleResult {
+  title: String!
+}
+
 type GetMaxSelectedCandidateResult {
   maxSelected: Int!
 }
@@ -138,6 +142,7 @@ type Query {
   getCodes(electionId: String!): [Code!]!
   getElection(electionId: String!): Election!
   getElectionResult(electionId: String!): [GetElectionResultResult!]!
+  getElectionTitle(electionId: String!): GetElectionTitleResult!
   getElections: [Election!]!
   getMaxSelectedCandidate(codeId: String!, electionId: String!): GetMaxSelectedCandidateResult!
   getProfile: Account!
