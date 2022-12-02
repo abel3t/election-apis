@@ -1,6 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { PrismaService } from 'shared/services';
 import { BadRequestException } from '@nestjs/common';
+import { getLastItem } from "../../../shared/utils/array.util";
 
 export class GetVotingCandidatesQuery {
   constructor(public readonly electionId: string, public readonly codeId) {}
@@ -32,7 +33,7 @@ export class GetVotingCandidatesHandler
     });
 
     candidates.sort((a, b) => {
-      return a.name?.split(' ').at(-1) > b.name?.split(' ').at(-1) ? 1 : -1;
+      return getLastItem(a.name?.split(' ')) > getLastItem(b.name?.split(' ')) ? 1 : -1;
     });
 
     return candidates;

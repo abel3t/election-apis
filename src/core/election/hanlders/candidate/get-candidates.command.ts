@@ -1,5 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { PrismaService } from 'shared/services';
+import { getLastItem } from "../../../../shared/utils/array.util";
 
 export class GetCandidatesQuery {
   constructor(public readonly electionId: string) {}
@@ -18,7 +19,7 @@ export class GetCandidatesHandler implements IQueryHandler<GetCandidatesQuery> {
       });
 
      candidates.sort((a, b) => {
-       return a.name?.split(' ').at(-1) > b.name?.split(' ').at(-1) ? 1 : -1;
+       return getLastItem(a.name?.split(' ')) > getLastItem(b.name?.split(' ')) ? 1 : -1;
      });
 
      return candidates;
