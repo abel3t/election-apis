@@ -39,6 +39,8 @@ export class GenerateCodesHandler
       throw new BadRequestException('Amount is invalid!');
     }
 
+    const existedCodes = await this.prisma.code.findMany({ where: { electionId }});
+
     const codes = [];
     const date = new Date();
     for (let i = 0; i < amount; i++) {
@@ -46,7 +48,7 @@ export class GenerateCodesHandler
 
       const createdAt = date.toISOString();
 
-      const text = 'C' + `${i + 1}`.padStart(4, '0');
+      const text = 'C' + `${(existedCodes?.length || 0) + i + 1}`.padStart(4, '0');
       codes.push({ electionId, text, createdAt });
     }
 

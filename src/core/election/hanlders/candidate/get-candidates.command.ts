@@ -9,12 +9,18 @@ export class GetCandidatesQuery {
 export class GetCandidatesHandler implements IQueryHandler<GetCandidatesQuery> {
   constructor(private readonly prisma: PrismaService) {}
 
-  execute({ electionId }: GetCandidatesQuery) {
-    return this.prisma.candidate.findMany({
-      where: {
-        election: { id: electionId, isDeleted: false },
-        isDeleted: false
-      }
-    });
+  async execute({ electionId }: GetCandidatesQuery) {
+     const candidates = await this.prisma.candidate.findMany({
+        where: {
+          election: { id: electionId, isDeleted: false },
+          isDeleted: false
+        }
+      });
+
+     candidates.sort((a, b) => {
+       return a.name?.split(' ').at(-1) > b.name?.split(' ').at(-1) ? 1 : -1;
+     });
+
+     return candidates;
   }
 }

@@ -50,16 +50,17 @@ export function generatePdf(electionId: string, codes: any): Promise<Buffer> {
       bufferPages: true
     });
 
-    const images = await Promise.all(
-      codes.map(async (code) => {
-        return {
-          text: code.text,
-          link: await generateQrCode(
-            `${AppConfig.APP.WEBSITE_URL}/voting/?election=${electionId}&code=${code.id}`
-          )
-        };
-      })
-    );
+    const images = [];
+    for (const code of codes) {
+      const link = await generateQrCode(
+        `${AppConfig.APP.WEBSITE_URL}/voting/?election=${electionId}&code=${code.id}`
+      );
+
+      images.push({
+        text: code.text,
+        link
+      });
+    }
 
     addImagesToDoc(doc, images);
 

@@ -27,8 +27,14 @@ export class GetVotingCandidatesHandler
       throw new BadRequestException('Code is invalid.');
     }
 
-    return this.prisma.candidate.findMany({
+    const candidates = await this.prisma.candidate.findMany({
       where: { electionId, isDeleted: false }
     });
+
+    candidates.sort((a, b) => {
+      return a.name?.split(' ').at(-1) > b.name?.split(' ').at(-1) ? 1 : -1;
+    });
+
+    return candidates;
   }
 }
