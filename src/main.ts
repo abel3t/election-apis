@@ -14,7 +14,8 @@ async function bootstrap() {
       'http://localhost:3000',
       'http://138.2.71.128:3000',
       'https://138.2.71.128:3000',
-      'http://192.168.1.35:3000'
+      'http://192.168.1.35:3000',
+      'https://lecgv.up.railway.app'
     ],
     allowedHeaders: [
       'Access-Control-Allow-Origin',
