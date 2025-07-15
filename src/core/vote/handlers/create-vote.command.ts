@@ -77,7 +77,7 @@ export class CreateVoteHandler implements ICommandHandler<CreateVoteCommand> {
       return { electionId, codeId, candidateId, createdAt: date };
     });
 
-    await Promise.all([
+    await this.prisma.$transaction([
       this.prisma.vote.createMany({ data: votes }),
       this.prisma.code.update({ data: { isUsed: true }, where: { id: codeId } })
     ]);

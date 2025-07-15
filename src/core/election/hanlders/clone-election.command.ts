@@ -23,28 +23,32 @@ export class CloneElectionsHandler
 
     const copiedElectionName = `Copy of ${existedElection.name}`;
 
-    const newElection = await this.prisma.election.create({
+    await this.prisma.$transaction(async (tx) => {
+      const newElection = await tx.election.create({
       data: {
         name: copiedElectionName,
         account: { connect: { id: existedElection.accountId } }
       }
-    });
+      });
 
-    const existedCandidates = await this.prisma.candidate.findMany({
+      const existedCandidates = await tx.candidate.findMany({
       where: {
         election: { id: electionId, isDeleted: false },
         isDeleted: false
       }
-    });
+      });
 
-    const newCandidates = existedCandidates.map((candidate) => ({
+      const newCandidates = existedCandidates.map((candidate) => ({
       name: candidate.name,
       imageUrl: candidate.imageUrl,
       electionId: newElection.id
-    }));
+      }));
 
-    await this.prisma.candidate.createMany({
-      data: newCandidates
+      if (newCandidates.length > 0) {
+      await tx.candidate.createMany({
+        data: newCandidates
+      });
+      }
     });
 
     return true;
