@@ -53,14 +53,19 @@ export class CreateVoteHandler implements ICommandHandler<CreateVoteCommand> {
       throw new BadRequestException('Your code is invalid!');
     }
 
-    // Get election to check maxSelected limit
+    // Get election to check maxSelected limit and status
     const election = await this.prisma.election.findUnique({
       where: { id: electionId },
-      select: { maxSelected: true }
+      select: { maxSelected: true, status: true }
     });
 
     if (!election) {
       throw new BadRequestException('Election not found!');
+    }
+
+    // Check if voting is still active
+    if (election.status === 'Closed') {
+      throw new BadRequestException('Voting for this election has been stopped!');
     }
 
     // Validate number of votes against maxSelected limit

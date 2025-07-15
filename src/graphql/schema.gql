@@ -131,6 +131,8 @@ type Mutation {
   generateCodes(input: GenerateCodesCodeInput!): [Code!]!
   login(input: AccountLoginInput!): LoginResult!
   refreshToken(input: RefreshTokenInput!): LoginResult!
+  startVoting(electionId: String!): Boolean!
+  stopVoting(electionId: String!): Boolean!
   updateCode(input: UpdateCodeInput!): Code!
   updateElection(electionId: String!, maxSelected: Float!, name: String!): Boolean!
 }

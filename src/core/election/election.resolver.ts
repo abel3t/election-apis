@@ -34,6 +34,8 @@ import {
 } from './hanlders/get-election-result.query';
 import { GetElectionQuery } from './hanlders/get-election.query';
 import { DeleteElectionCommand } from './hanlders/delete-election.command';
+import { StopVotingCommand } from './hanlders/stop-voting.command';
+import { StartVotingCommand } from './hanlders/start-voting.command';
 
 @Resolver((_) => Election)
 export class ElectionResolver {
@@ -171,5 +173,23 @@ export class ElectionResolver {
     return this.queryBus.execute(
       new GetElectionResultQuery(electionId, user.id)
     );
+  }
+
+  @UseGuards(AuthGuard)
+  @Mutation((_) => Boolean)
+  async stopVoting(
+    @Args('electionId') electionId: string,
+    @CurrentUser() user: ICurrentUser
+  ): Promise<boolean> {
+    return this.commandBus.execute(new StopVotingCommand(electionId, user.id));
+  }
+
+  @UseGuards(AuthGuard)
+  @Mutation((_) => Boolean)
+  async startVoting(
+    @Args('electionId') electionId: string,
+    @CurrentUser() user: ICurrentUser
+  ): Promise<boolean> {
+    return this.commandBus.execute(new StartVotingCommand(electionId, user.id));
   }
 }

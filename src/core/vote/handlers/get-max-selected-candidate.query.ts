@@ -26,12 +26,15 @@ export class GetMaxSelectedCandidateHandler
         electionId,
         isActive: true,
         isUsed: false,
-        isDeleted: false
+        isDeleted: false,
+        election: {
+          status: 'Active'
+        }
       }
     });
 
     if (!existedCode) {
-      throw new BadRequestException('Code is invalid.');
+      throw new BadRequestException('Code is invalid or voting has been stopped.');
     }
 
     const election = await this.prisma.election.findUnique({

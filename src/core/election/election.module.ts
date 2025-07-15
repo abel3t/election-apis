@@ -17,6 +17,8 @@ import { S3Service } from 'shared/services/s3.service';
 import { GetElectionResultHandler } from './hanlders/get-election-result.query';
 import { GetElectionHandlerGetElectionHandler } from './hanlders/get-election.query';
 import { DeleteElectionHandler } from './hanlders/delete-election.command';
+import { StopVotingHandler } from './hanlders/stop-voting.command';
+import { StartVotingHandler } from './hanlders/start-voting.command';
 
 const QueryHandlers = [
   GetElectionsHandler,
@@ -34,7 +36,9 @@ const CommandHandlers = [
   CloneElectionsHandler,
   DeleteCandidateHandler,
   UpdateElectionHandler,
-  DeleteElectionHandler
+  DeleteElectionHandler,
+  StopVotingHandler,
+  StartVotingHandler
 ];
 
 @Module({

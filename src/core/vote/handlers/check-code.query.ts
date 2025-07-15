@@ -32,7 +32,10 @@ export class CheckCodeHandler implements IQueryHandler<CheckCodeQuery> {
         electionId,
         isActive: true,
         isUsed: false,
-        isDeleted: false
+        isDeleted: false,
+        election: {
+          status: 'Active'
+        }
       }
     });
 
