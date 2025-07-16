@@ -68,6 +68,12 @@ export class CreateVoteHandler implements ICommandHandler<CreateVoteCommand> {
       throw new BadRequestException('Voting for this election has been stopped!');
     }
 
+    // Check for uniqueness in candidateIds
+    const uniqueCandidateIds = new Set(candidateIds);
+    if (uniqueCandidateIds.size !== candidateIds.length) {
+      throw new BadRequestException('You must select unique candidates!');
+    }
+
     // Validate number of votes against maxSelected limit
     if (candidateIds.length !== election.maxSelected) {
       throw new BadRequestException(`You must select exactly ${election.maxSelected} candidate(s)!`);
