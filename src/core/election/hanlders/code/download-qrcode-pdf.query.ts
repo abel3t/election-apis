@@ -30,8 +30,9 @@ export class DownloadQrCodePdfHandler
     const codes = await this.prisma.code.findMany({
       where: {
         election: { id: electionId, isDeleted: false },
-        isDeleted: false
-      }
+        isDeleted: false,
+      },
+      orderBy: { text: 'asc' },
     });
 
     if (!codes.length) {
