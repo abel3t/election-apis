@@ -27,6 +27,7 @@ export class CloneElectionsHandler
       const newElection = await tx.election.create({
       data: {
         name: copiedElectionName,
+        maxSelected: existedElection.maxSelected,
         account: { connect: { id: existedElection.accountId } }
       }
       });
