@@ -19,7 +19,9 @@ export class GetCandidatesHandler implements IQueryHandler<GetCandidatesQuery> {
       });
 
      candidates.sort((a, b) => {
-       return getLastItem(a.name?.split(' ')) > getLastItem(b.name?.split(' ')) ? 1 : -1;
+      const lastNameA = getLastItem(a.name?.split(' '));
+      const lastNameB = getLastItem(b.name?.split(' '));
+      return lastNameA.localeCompare(lastNameB, 'vi', { sensitivity: 'base' });
      });
 
      return candidates;
